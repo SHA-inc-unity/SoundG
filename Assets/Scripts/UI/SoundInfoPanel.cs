@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SoundInfoPanel : MonoBehaviour
@@ -11,23 +12,22 @@ public class SoundInfoPanel : MonoBehaviour
     [SerializeField]
     private Button startSoundButton;
 
-    private SoundData nowSelectSoung;
-
     public void RefreshSoundInfoPanel(SoundData soundData)
     {
         if(soundData == null)
             return;
 
-        startSoundButton.gameObject.SetActive(true);
+        startSoundButton.GetComponent<Button>().interactable = true;
 
         soundName.SetText(soundData.Name);
         soundImage.sprite = soundData.Image;
 
-        nowSelectSoung = soundData;
+        GameData.SetSelectedSong(soundData);
     }
 
     public void StartSong()
     {
-        // Тут начало песни
+
+        SceneManager.LoadScene("Game");
     }
 }

@@ -12,6 +12,10 @@ public class SetLevelList : MonoBehaviour
 
     private LoadSounds loadSounds = new LoadSounds();
 
+    public void ReloadAllSounds()
+    {
+        loadSounds.LoadAllSounds(true);
+    }
 
     public void SetSelectedSound(SoundData sound)
     {
@@ -20,7 +24,7 @@ public class SetLevelList : MonoBehaviour
 
     private void Start()
     {
-        List<SoundData> soundList = loadSounds.LoadAllSounds();
+        List<SoundData> soundList = loadSounds.LoadAllSounds(false);
         foreach (SoundData data in soundList)
         {
             SoundObject soundObject = Instantiate(standartSoundObject, contentSoundList);
