@@ -9,31 +9,20 @@ public class SoundObject : MonoBehaviour
     [SerializeField]
     private Image image;
 
-    public void SetData(SoundData soundData)
-    {
-        this.text.SetText(soundData.GetName());
-        this.image = soundData.GetImage();
-    }
-}
+    private SetLevelList setLevelList;
+    private SoundData soundData;
 
-public class SoundData
-{
-    string name;
-    Image image;
-
-    public SoundData(string text, Image image)
+    public void SetData(SoundData soundData, SetLevelList setLevelList)
     {
-        this.name = text;
-        this.image = image;
+        this.soundData = soundData;
+        this.setLevelList = setLevelList;
+
+        text.SetText(soundData.Name);
+        image.sprite = soundData.Image;
     }
 
-    public Image GetImage()
+    public void OnClick()
     {
-        return image;
-    }
-
-    public string GetName()
-    {
-        return name;
+        setLevelList.SetSelectedSound(soundData);
     }
 }
