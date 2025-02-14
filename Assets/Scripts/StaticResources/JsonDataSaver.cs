@@ -50,6 +50,7 @@ public static class JsonDataSaver
     private class DataEntry
     {
         public string key;
+        public int speed;
         public List<TimeValuePair> values;
     }
 

@@ -6,7 +6,10 @@ using UnityEngine;
 public enum PanelsName
 {
     startGame,
-    setLevel
+    setLevel,
+    createMusic,
+    redactorMusic,
+    scoresList,
 }
 
 public class PanelController : MonoBehaviour
