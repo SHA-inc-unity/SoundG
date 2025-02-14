@@ -9,12 +9,10 @@ public static class BitGenerator
     private static float[] spectrum = new float[SampleSize];
     private static List<TimeValuePair> rhythmEvents;
     private static float globalMedian, upperMedian, lowerMedian;
-    private static float bpm = 0f;
 
     public static List<TimeValuePair> AnalyzeMusic(AudioClip audioClip)
     {
         rhythmEvents = new List<TimeValuePair>();
-        List<float> spectrumMedians = new List<float>();
         List<float[]> allSpectrums = new List<float[]>();
 
         float step = 0.5f; // Интервал анализа
@@ -33,17 +31,15 @@ public static class BitGenerator
             }
 
             AudioFFT(sampleSegment, spectrum);
-
-            float spectrumMedian = GetMedian(spectrum);
-            spectrumMedians.Add(spectrumMedian);
+            allSpectrums.Add(spectrum.ToArray());
         }
 
-        // Вычисляем медианы спектра
-        globalMedian = GetMedian(spectrumMedians.ToArray());
+        // Вычисляем медиану спектра по всей песне
+        globalMedian = GetMedian(allSpectrums.SelectMany(s => s).ToArray());
         Debug.Log($"Global Spectrum Median: {globalMedian}");
 
-        var aboveMedian = spectrumMedians.Where(x => x > globalMedian).ToArray();
-        var belowMedian = spectrumMedians.Where(x => x < globalMedian).ToArray();
+        var aboveMedian = allSpectrums.SelectMany(s => s).Where(x => x > globalMedian).ToArray();
+        var belowMedian = allSpectrums.SelectMany(s => s).Where(x => x < globalMedian).ToArray();
 
         upperMedian = aboveMedian.Length > 0 ? GetMedian(aboveMedian) : globalMedian;
         lowerMedian = belowMedian.Length > 0 ? GetMedian(belowMedian) : globalMedian;
@@ -51,33 +47,28 @@ public static class BitGenerator
         Debug.Log($"Upper Spectrum Median: {upperMedian}");
         Debug.Log($"Lower Spectrum Median: {lowerMedian}");
 
-        // Анализируем ритм и собираем события
+        // Повторно анализируем данные и получаем события
         float time = 0f;
-        List<float> beatTimes = new List<float>();
-
         foreach (var spec in allSpectrums)
         {
             List<int> arrowMask = DetermineArrows(spec);
-            if (arrowMask.Count > 0)
+            foreach (var item in arrowMask)
             {
-                rhythmEvents.Add(new TimeValuePair(time, arrowMask.First()));
-                beatTimes.Add(time);
+                rhythmEvents.Add(new TimeValuePair(time, item));
             }
             time += step;
         }
-
-        // Вычисление BPM
-        bpm = CalculateBPM(beatTimes);
-        Debug.Log($"Estimated BPM: {bpm}");
 
         return rhythmEvents;
     }
 
     private static void AudioFFT(float[] samples, float[] output)
     {
+        // Копируем данные во временный массив
         for (int i = 0; i < samples.Length; i++)
             output[i] = samples[i];
 
+        // Применяем FFT (используем Hamming окно)
         AudioListener.GetSpectrumData(output, 0, FFTWindow.Hamming);
     }
 
@@ -108,18 +99,5 @@ public static class BitGenerator
             ? (sortedValues[middle - 1] + sortedValues[middle]) / 2f
             : sortedValues[middle];
     }
-
-    private static float CalculateBPM(List<float> beatTimes)
-    {
-        if (beatTimes.Count < 2) return 0f;
-
-        List<float> intervals = new List<float>();
-        for (int i = 1; i < beatTimes.Count; i++)
-        {
-            intervals.Add(beatTimes[i] - beatTimes[i - 1]);
-        }
-
-        float avgInterval = intervals.Average();
-        return avgInterval > 0 ? 60f / avgInterval : 0f;
-    }
 }
+
