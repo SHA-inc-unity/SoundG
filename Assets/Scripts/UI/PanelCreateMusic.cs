@@ -3,6 +3,7 @@ using System.Collections;
 using System.IO;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PanelCreateMusic : MonoBehaviour
@@ -42,14 +43,21 @@ public class PanelCreateMusic : MonoBehaviour
     public void PauseUnpause()
     {
         if (audioSource.isPlaying)
+        {
+            playButton.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = "||";
             audioSource.Pause();
+        }
         else
+        {
+            playButton.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = ">";
             audioSource.UnPause();
+        }
     }
 
     public void OpenRedactorOfBits()
     {
         GameData.SetSelectedSong(new SoundData(enteredText, image, audioSource.clip, new System.Collections.Generic.List<JsonDataSaver.TimeValuePair>()));
+        SceneManager.LoadScene("BitsRedactor");
     }
 
     private IEnumerator LoadAudio(string path)
@@ -89,6 +97,7 @@ public class PanelCreateMusic : MonoBehaviour
                     previewImage.sprite = image;
                     UnlockRedactor();
                     audioSource.Play();
+                    PauseUnpause();
                 }
             }
             else
