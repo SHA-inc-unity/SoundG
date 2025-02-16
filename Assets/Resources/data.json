@@ -2,6 +2,7 @@
     "items": [
         {
             "key": "401",
+            "speed": 0,
             "values": [
                 {
                     "time": 0.0,
@@ -3499,6 +3500,7 @@
         },
         {
             "key": "Anastasia Y. - Феминизм",
+            "speed": 0,
             "values": [
                 {
                     "time": 0.0,
@@ -6908,1639 +6910,321 @@
         },
         {
             "key": "Beginning",
+            "speed": 0,
             "values": [
                 {
-                    "time": 0.0,
-                    "value": 1
+                    "time": 1.1306666135787964,
+                    "value": 0
                 },
                 {
-                    "time": 0.5,
-                    "value": 1
+                    "time": 1.2373332977294922,
+                    "value": 0
                 },
                 {
-                    "time": 1.0,
-                    "value": 2
+                    "time": 1.343999981880188,
+                    "value": 0
                 },
                 {
-                    "time": 1.5,
-                    "value": 2
+                    "time": 1.493333339691162,
+                    "value": 0
                 },
                 {
-                    "time": 2.0,
-                    "value": 1
+                    "time": 1.5786666870117188,
+                    "value": 0
                 },
                 {
-                    "time": 2.5,
-                    "value": 2
+                    "time": 1.7066667079925538,
+                    "value": 0
                 },
                 {
-                    "time": 3.0,
-                    "value": 2
+                    "time": 1.7280000448226929,
+                    "value": 0
                 },
                 {
-                    "time": 3.5,
-                    "value": 2
+                    "time": 1.8986666202545167,
+                    "value": 0
                 },
                 {
-                    "time": 4.0,
-                    "value": 2
+                    "time": 1.9839999675750733,
+                    "value": 0
                 },
                 {
-                    "time": 4.5,
-                    "value": 2
+                    "time": 2.1546666622161867,
+                    "value": 0
                 },
                 {
-                    "time": 5.0,
-                    "value": 1
+                    "time": 2.197333335876465,
+                    "value": 0
                 },
                 {
-                    "time": 5.5,
-                    "value": 2
+                    "time": 2.3893332481384279,
+                    "value": 0
                 },
                 {
-                    "time": 6.0,
-                    "value": 1
+                    "time": 2.4746665954589845,
+                    "value": 0
                 },
                 {
-                    "time": 6.5,
-                    "value": 2
+                    "time": 2.6453332901000978,
+                    "value": 0
                 },
                 {
-                    "time": 7.0,
-                    "value": 2
+                    "time": 2.6453332901000978,
+                    "value": 0
                 },
                 {
-                    "time": 7.5,
-                    "value": 1
+                    "time": 2.8586666584014894,
+                    "value": 0
                 },
                 {
-                    "time": 8.0,
-                    "value": 1
+                    "time": 2.9653332233428957,
+                    "value": 0
                 },
                 {
-                    "time": 8.5,
-                    "value": 2
+                    "time": 3.050666570663452,
+                    "value": 0
                 },
                 {
-                    "time": 9.0,
-                    "value": 2
+                    "time": 3.178666591644287,
+                    "value": 0
                 },
                 {
-                    "time": 9.5,
-                    "value": 1
+                    "time": 3.2639999389648439,
+                    "value": 0
                 },
                 {
-                    "time": 10.0,
-                    "value": 1
+                    "time": 3.5413334369659426,
+                    "value": 0
                 },
                 {
-                    "time": 10.5,
-                    "value": 1
+                    "time": 3.6053333282470705,
+                    "value": 0
                 },
                 {
-                    "time": 11.0,
-                    "value": 1
+                    "time": 3.7333333492279054,
+                    "value": 0
                 },
                 {
-                    "time": 11.5,
-                    "value": 1
+                    "time": 3.754666566848755,
+                    "value": 0
                 },
                 {
-                    "time": 12.0,
-                    "value": 2
+                    "time": 3.7760000228881838,
+                    "value": 0
                 },
                 {
-                    "time": 12.5,
-                    "value": 1
+                    "time": 3.9040000438690187,
+                    "value": 0
                 },
                 {
-                    "time": 13.0,
-                    "value": 1
+                    "time": 4.0320000648498539,
+                    "value": 0
                 },
                 {
-                    "time": 13.5,
-                    "value": 1
+                    "time": 4.074666500091553,
+                    "value": 0
                 },
                 {
-                    "time": 14.0,
-                    "value": 1
+                    "time": 4.159999847412109,
+                    "value": 0
                 },
                 {
-                    "time": 14.5,
-                    "value": 1
+                    "time": 4.223999977111816,
+                    "value": 0
                 },
                 {
-                    "time": 15.0,
-                    "value": 2
+                    "time": 4.3520002365112309,
+                    "value": 0
                 },
                 {
-                    "time": 15.5,
-                    "value": 2
+                    "time": 4.37333345413208,
+                    "value": 0
                 },
                 {
-                    "time": 16.0,
-                    "value": 1
+                    "time": 4.501333236694336,
+                    "value": 0
                 },
                 {
-                    "time": 16.5,
-                    "value": 1
+                    "time": 4.544000148773193,
+                    "value": 0
                 },
                 {
-                    "time": 17.0,
-                    "value": 1
+                    "time": 4.565333366394043,
+                    "value": 0
                 },
                 {
-                    "time": 17.5,
-                    "value": 1
+                    "time": 4.714666843414307,
+                    "value": 0
                 },
                 {
-                    "time": 18.0,
-                    "value": 2
+                    "time": 4.736000061035156,
+                    "value": 0
                 },
                 {
-                    "time": 18.5,
-                    "value": 2
+                    "time": 4.800000190734863,
+                    "value": 0
                 },
                 {
-                    "time": 19.0,
-                    "value": 2
+                    "time": 4.863999843597412,
+                    "value": 0
                 },
                 {
-                    "time": 19.5,
-                    "value": 1
+                    "time": 4.992000102996826,
+                    "value": 0
                 },
                 {
-                    "time": 20.0,
-                    "value": 2
+                    "time": 5.1626667976379398,
+                    "value": 0
                 },
                 {
-                    "time": 20.5,
-                    "value": 2
+                    "time": 5.205333232879639,
+                    "value": 0
                 },
                 {
-                    "time": 21.0,
-                    "value": 1
+                    "time": 5.226666450500488,
+                    "value": 0
                 },
                 {
-                    "time": 21.5,
-                    "value": 2
+                    "time": 5.397333145141602,
+                    "value": 0
                 },
                 {
-                    "time": 22.0,
-                    "value": 1
+                    "time": 5.418666839599609,
+                    "value": 0
                 },
                 {
-                    "time": 22.5,
-                    "value": 1
+                    "time": 5.546666622161865,
+                    "value": 0
                 },
                 {
-                    "time": 23.0,
-                    "value": 2
+                    "time": 5.631999969482422,
+                    "value": 0
                 },
                 {
-                    "time": 23.5,
-                    "value": 2
+                    "time": 5.6533331871032719,
+                    "value": 0
                 },
                 {
-                    "time": 24.0,
-                    "value": 2
+                    "time": 5.866666793823242,
+                    "value": 0
                 },
                 {
-                    "time": 24.5,
-                    "value": 1
+                    "time": 5.866666793823242,
+                    "value": 0
                 },
                 {
-                    "time": 25.0,
-                    "value": 1
+                    "time": 5.952000141143799,
+                    "value": 0
                 },
                 {
-                    "time": 25.5,
-                    "value": 2
+                    "time": 5.952000141143799,
+                    "value": 0
                 },
                 {
-                    "time": 26.0,
-                    "value": 1
+                    "time": 6.079999923706055,
+                    "value": 0
                 },
                 {
-                    "time": 26.5,
-                    "value": 1
+                    "time": 6.101333141326904,
+                    "value": 0
                 },
                 {
-                    "time": 27.0,
-                    "value": 1
+                    "time": 6.144000053405762,
+                    "value": 0
                 },
                 {
-                    "time": 27.5,
-                    "value": 2
+                    "time": 6.165333271026611,
+                    "value": 0
                 },
                 {
-                    "time": 28.0,
-                    "value": 2
+                    "time": 6.250666618347168,
+                    "value": 0
                 },
                 {
-                    "time": 28.5,
-                    "value": 1
+                    "time": 6.271999835968018,
+                    "value": 0
                 },
                 {
-                    "time": 29.0,
-                    "value": 2
+                    "time": 6.357333183288574,
+                    "value": 0
                 },
                 {
-                    "time": 29.5,
-                    "value": 1
+                    "time": 6.357333183288574,
+                    "value": 0
                 },
                 {
-                    "time": 30.0,
-                    "value": 2
+                    "time": 6.400000095367432,
+                    "value": 0
                 },
                 {
-                    "time": 30.5,
-                    "value": 1
+                    "time": 6.506666660308838,
+                    "value": 0
                 },
                 {
-                    "time": 31.0,
-                    "value": 1
+                    "time": 6.506666660308838,
+                    "value": 0
                 },
                 {
-                    "time": 31.5,
-                    "value": 1
+                    "time": 6.613333225250244,
+                    "value": 0
                 },
                 {
-                    "time": 32.0,
-                    "value": 1
+                    "time": 6.634666442871094,
+                    "value": 0
                 },
                 {
-                    "time": 32.5,
-                    "value": 2
+                    "time": 6.698666572570801,
+                    "value": 0
                 },
                 {
-                    "time": 33.0,
-                    "value": 2
+                    "time": 6.698666572570801,
+                    "value": 0
                 },
                 {
-                    "time": 33.5,
-                    "value": 2
+                    "time": 6.805333137512207,
+                    "value": 0
                 },
                 {
-                    "time": 34.0,
-                    "value": 2
+                    "time": 6.805333137512207,
+                    "value": 0
                 },
                 {
-                    "time": 34.5,
-                    "value": 2
+                    "time": 6.8480000495910648,
+                    "value": 0
                 },
                 {
-                    "time": 35.0,
-                    "value": 1
+                    "time": 6.8480000495910648,
+                    "value": 0
                 },
                 {
-                    "time": 35.5,
-                    "value": 1
+                    "time": 6.933333396911621,
+                    "value": 0
                 },
                 {
-                    "time": 36.0,
-                    "value": 1
+                    "time": 6.997333526611328,
+                    "value": 0
                 },
                 {
-                    "time": 36.5,
-                    "value": 1
+                    "time": 7.018666744232178,
+                    "value": 0
                 },
                 {
-                    "time": 37.0,
-                    "value": 2
+                    "time": 7.168000221252441,
+                    "value": 0
                 },
                 {
-                    "time": 37.5,
-                    "value": 2
+                    "time": 7.168000221252441,
+                    "value": 0
                 },
                 {
-                    "time": 38.0,
-                    "value": 1
-                },
-                {
-                    "time": 38.5,
-                    "value": 1
-                },
-                {
-                    "time": 39.0,
-                    "value": 1
-                },
-                {
-                    "time": 39.5,
-                    "value": 2
-                },
-                {
-                    "time": 40.0,
-                    "value": 1
-                },
-                {
-                    "time": 40.5,
-                    "value": 2
-                },
-                {
-                    "time": 41.0,
-                    "value": 2
-                },
-                {
-                    "time": 41.5,
-                    "value": 2
-                },
-                {
-                    "time": 42.0,
-                    "value": 2
-                },
-                {
-                    "time": 42.5,
-                    "value": 1
-                },
-                {
-                    "time": 43.0,
-                    "value": 1
-                },
-                {
-                    "time": 43.5,
-                    "value": 1
-                },
-                {
-                    "time": 44.0,
-                    "value": 2
-                },
-                {
-                    "time": 44.5,
-                    "value": 1
-                },
-                {
-                    "time": 45.0,
-                    "value": 2
-                },
-                {
-                    "time": 45.5,
-                    "value": 2
-                },
-                {
-                    "time": 46.0,
-                    "value": 2
-                },
-                {
-                    "time": 46.5,
-                    "value": 2
-                },
-                {
-                    "time": 47.0,
-                    "value": 2
-                },
-                {
-                    "time": 47.5,
-                    "value": 1
-                },
-                {
-                    "time": 48.0,
-                    "value": 1
-                },
-                {
-                    "time": 48.5,
-                    "value": 1
-                },
-                {
-                    "time": 49.0,
-                    "value": 2
-                },
-                {
-                    "time": 49.5,
-                    "value": 2
-                },
-                {
-                    "time": 50.0,
-                    "value": 1
-                },
-                {
-                    "time": 50.5,
-                    "value": 2
-                },
-                {
-                    "time": 51.0,
-                    "value": 1
-                },
-                {
-                    "time": 51.5,
-                    "value": 2
-                },
-                {
-                    "time": 52.0,
-                    "value": 2
-                },
-                {
-                    "time": 52.5,
-                    "value": 2
-                },
-                {
-                    "time": 53.0,
-                    "value": 2
-                },
-                {
-                    "time": 53.5,
-                    "value": 1
-                },
-                {
-                    "time": 54.0,
-                    "value": 2
-                },
-                {
-                    "time": 54.5,
-                    "value": 2
-                },
-                {
-                    "time": 55.0,
-                    "value": 2
-                },
-                {
-                    "time": 55.5,
-                    "value": 2
-                },
-                {
-                    "time": 56.0,
-                    "value": 2
-                },
-                {
-                    "time": 56.5,
-                    "value": 1
-                },
-                {
-                    "time": 57.0,
-                    "value": 1
-                },
-                {
-                    "time": 57.5,
-                    "value": 1
-                },
-                {
-                    "time": 58.0,
-                    "value": 2
-                },
-                {
-                    "time": 58.5,
-                    "value": 2
-                },
-                {
-                    "time": 59.0,
-                    "value": 2
-                },
-                {
-                    "time": 59.5,
-                    "value": 1
-                },
-                {
-                    "time": 60.0,
-                    "value": 2
-                },
-                {
-                    "time": 60.5,
-                    "value": 1
-                },
-                {
-                    "time": 61.0,
-                    "value": 2
-                },
-                {
-                    "time": 61.5,
-                    "value": 2
-                },
-                {
-                    "time": 62.0,
-                    "value": 1
-                },
-                {
-                    "time": 62.5,
-                    "value": 1
-                },
-                {
-                    "time": 63.0,
-                    "value": 1
-                },
-                {
-                    "time": 63.5,
-                    "value": 1
-                },
-                {
-                    "time": 64.0,
-                    "value": 2
-                },
-                {
-                    "time": 64.5,
-                    "value": 1
-                },
-                {
-                    "time": 65.0,
-                    "value": 2
-                },
-                {
-                    "time": 65.5,
-                    "value": 2
-                },
-                {
-                    "time": 66.0,
-                    "value": 2
-                },
-                {
-                    "time": 66.5,
-                    "value": 1
-                },
-                {
-                    "time": 67.0,
-                    "value": 1
-                },
-                {
-                    "time": 67.5,
-                    "value": 2
-                },
-                {
-                    "time": 68.0,
-                    "value": 2
-                },
-                {
-                    "time": 68.5,
-                    "value": 1
-                },
-                {
-                    "time": 69.0,
-                    "value": 2
-                },
-                {
-                    "time": 69.5,
-                    "value": 1
-                },
-                {
-                    "time": 70.0,
-                    "value": 1
-                },
-                {
-                    "time": 70.5,
-                    "value": 2
-                },
-                {
-                    "time": 71.0,
-                    "value": 2
-                },
-                {
-                    "time": 71.5,
-                    "value": 2
-                },
-                {
-                    "time": 72.0,
-                    "value": 2
-                },
-                {
-                    "time": 72.5,
-                    "value": 1
-                },
-                {
-                    "time": 73.0,
-                    "value": 1
-                },
-                {
-                    "time": 73.5,
-                    "value": 2
-                },
-                {
-                    "time": 74.0,
-                    "value": 1
-                },
-                {
-                    "time": 74.5,
-                    "value": 2
-                },
-                {
-                    "time": 75.0,
-                    "value": 2
-                },
-                {
-                    "time": 75.5,
-                    "value": 2
-                },
-                {
-                    "time": 76.0,
-                    "value": 2
-                },
-                {
-                    "time": 76.5,
-                    "value": 1
-                },
-                {
-                    "time": 77.0,
-                    "value": 2
-                },
-                {
-                    "time": 77.5,
-                    "value": 1
-                },
-                {
-                    "time": 78.0,
-                    "value": 1
-                },
-                {
-                    "time": 78.5,
-                    "value": 1
-                },
-                {
-                    "time": 79.0,
-                    "value": 2
-                },
-                {
-                    "time": 79.5,
-                    "value": 2
-                },
-                {
-                    "time": 80.0,
-                    "value": 1
-                },
-                {
-                    "time": 80.5,
-                    "value": 2
-                },
-                {
-                    "time": 81.0,
-                    "value": 2
-                },
-                {
-                    "time": 81.5,
-                    "value": 1
-                },
-                {
-                    "time": 82.0,
-                    "value": 2
-                },
-                {
-                    "time": 82.5,
-                    "value": 2
-                },
-                {
-                    "time": 83.0,
-                    "value": 1
-                },
-                {
-                    "time": 83.5,
-                    "value": 2
-                },
-                {
-                    "time": 84.0,
-                    "value": 1
-                },
-                {
-                    "time": 84.5,
-                    "value": 2
-                },
-                {
-                    "time": 85.0,
-                    "value": 1
-                },
-                {
-                    "time": 85.5,
-                    "value": 1
-                },
-                {
-                    "time": 86.0,
-                    "value": 1
-                },
-                {
-                    "time": 86.5,
-                    "value": 2
-                },
-                {
-                    "time": 87.0,
-                    "value": 1
-                },
-                {
-                    "time": 87.5,
-                    "value": 2
-                },
-                {
-                    "time": 88.0,
-                    "value": 2
-                },
-                {
-                    "time": 88.5,
-                    "value": 2
-                },
-                {
-                    "time": 89.0,
-                    "value": 1
-                },
-                {
-                    "time": 89.5,
-                    "value": 1
-                },
-                {
-                    "time": 90.0,
-                    "value": 2
-                },
-                {
-                    "time": 90.5,
-                    "value": 1
-                },
-                {
-                    "time": 91.0,
-                    "value": 1
-                },
-                {
-                    "time": 91.5,
-                    "value": 2
-                },
-                {
-                    "time": 92.0,
-                    "value": 2
-                },
-                {
-                    "time": 92.5,
-                    "value": 2
-                },
-                {
-                    "time": 93.0,
-                    "value": 2
-                },
-                {
-                    "time": 93.5,
-                    "value": 2
-                },
-                {
-                    "time": 94.0,
-                    "value": 2
-                },
-                {
-                    "time": 94.5,
-                    "value": 2
-                },
-                {
-                    "time": 95.0,
-                    "value": 2
-                },
-                {
-                    "time": 95.5,
-                    "value": 2
-                },
-                {
-                    "time": 96.0,
-                    "value": 2
-                },
-                {
-                    "time": 96.5,
-                    "value": 1
-                },
-                {
-                    "time": 97.0,
-                    "value": 1
-                },
-                {
-                    "time": 97.5,
-                    "value": 2
-                },
-                {
-                    "time": 98.0,
-                    "value": 1
-                },
-                {
-                    "time": 98.5,
-                    "value": 2
-                },
-                {
-                    "time": 99.0,
-                    "value": 2
-                },
-                {
-                    "time": 99.5,
-                    "value": 1
-                },
-                {
-                    "time": 100.0,
-                    "value": 2
-                },
-                {
-                    "time": 100.5,
-                    "value": 2
-                },
-                {
-                    "time": 101.0,
-                    "value": 1
-                },
-                {
-                    "time": 101.5,
-                    "value": 2
-                },
-                {
-                    "time": 102.0,
-                    "value": 2
-                },
-                {
-                    "time": 102.5,
-                    "value": 2
-                },
-                {
-                    "time": 103.0,
-                    "value": 2
-                },
-                {
-                    "time": 103.5,
-                    "value": 2
-                },
-                {
-                    "time": 104.0,
-                    "value": 1
-                },
-                {
-                    "time": 104.5,
-                    "value": 1
-                },
-                {
-                    "time": 105.0,
-                    "value": 2
-                },
-                {
-                    "time": 105.5,
-                    "value": 1
-                },
-                {
-                    "time": 106.0,
-                    "value": 1
-                },
-                {
-                    "time": 106.5,
-                    "value": 1
-                },
-                {
-                    "time": 107.0,
-                    "value": 1
-                },
-                {
-                    "time": 107.5,
-                    "value": 1
-                },
-                {
-                    "time": 108.0,
-                    "value": 2
-                },
-                {
-                    "time": 108.5,
-                    "value": 2
-                },
-                {
-                    "time": 109.0,
-                    "value": 1
-                },
-                {
-                    "time": 109.5,
-                    "value": 1
-                },
-                {
-                    "time": 110.0,
-                    "value": 1
-                },
-                {
-                    "time": 110.5,
-                    "value": 2
-                },
-                {
-                    "time": 111.0,
-                    "value": 2
-                },
-                {
-                    "time": 111.5,
-                    "value": 1
-                },
-                {
-                    "time": 112.0,
-                    "value": 2
-                },
-                {
-                    "time": 112.5,
-                    "value": 2
-                },
-                {
-                    "time": 113.0,
-                    "value": 2
-                },
-                {
-                    "time": 113.5,
-                    "value": 2
-                },
-                {
-                    "time": 114.0,
-                    "value": 1
-                },
-                {
-                    "time": 114.5,
-                    "value": 2
-                },
-                {
-                    "time": 115.0,
-                    "value": 1
-                },
-                {
-                    "time": 115.5,
-                    "value": 1
-                },
-                {
-                    "time": 116.0,
-                    "value": 1
-                },
-                {
-                    "time": 116.5,
-                    "value": 2
-                },
-                {
-                    "time": 117.0,
-                    "value": 1
-                },
-                {
-                    "time": 117.5,
-                    "value": 1
-                },
-                {
-                    "time": 118.0,
-                    "value": 2
-                },
-                {
-                    "time": 118.5,
-                    "value": 2
-                },
-                {
-                    "time": 119.0,
-                    "value": 2
-                },
-                {
-                    "time": 119.5,
-                    "value": 2
-                },
-                {
-                    "time": 120.0,
-                    "value": 1
-                },
-                {
-                    "time": 120.5,
-                    "value": 1
-                },
-                {
-                    "time": 121.0,
-                    "value": 2
-                },
-                {
-                    "time": 121.5,
-                    "value": 1
-                },
-                {
-                    "time": 122.0,
-                    "value": 2
-                },
-                {
-                    "time": 122.5,
-                    "value": 2
-                },
-                {
-                    "time": 123.0,
-                    "value": 1
-                },
-                {
-                    "time": 123.5,
-                    "value": 1
-                },
-                {
-                    "time": 124.0,
-                    "value": 2
-                },
-                {
-                    "time": 124.5,
-                    "value": 1
-                },
-                {
-                    "time": 125.0,
-                    "value": 2
-                },
-                {
-                    "time": 125.5,
-                    "value": 2
-                },
-                {
-                    "time": 126.0,
-                    "value": 1
-                },
-                {
-                    "time": 126.5,
-                    "value": 2
-                },
-                {
-                    "time": 127.0,
-                    "value": 1
-                },
-                {
-                    "time": 127.5,
-                    "value": 1
-                },
-                {
-                    "time": 128.0,
-                    "value": 2
-                },
-                {
-                    "time": 128.5,
-                    "value": 1
-                },
-                {
-                    "time": 129.0,
-                    "value": 1
-                },
-                {
-                    "time": 129.5,
-                    "value": 1
-                },
-                {
-                    "time": 130.0,
-                    "value": 1
-                },
-                {
-                    "time": 130.5,
-                    "value": 2
-                },
-                {
-                    "time": 131.0,
-                    "value": 1
-                },
-                {
-                    "time": 131.5,
-                    "value": 2
-                },
-                {
-                    "time": 132.0,
-                    "value": 2
-                },
-                {
-                    "time": 132.5,
-                    "value": 2
-                },
-                {
-                    "time": 133.0,
-                    "value": 1
-                },
-                {
-                    "time": 133.5,
-                    "value": 2
-                },
-                {
-                    "time": 134.0,
-                    "value": 1
-                },
-                {
-                    "time": 134.5,
-                    "value": 2
-                },
-                {
-                    "time": 135.0,
-                    "value": 2
-                },
-                {
-                    "time": 135.5,
-                    "value": 2
-                },
-                {
-                    "time": 136.0,
-                    "value": 2
-                },
-                {
-                    "time": 136.5,
-                    "value": 1
-                },
-                {
-                    "time": 137.0,
-                    "value": 2
-                },
-                {
-                    "time": 137.5,
-                    "value": 1
-                },
-                {
-                    "time": 138.0,
-                    "value": 1
-                },
-                {
-                    "time": 138.5,
-                    "value": 1
-                },
-                {
-                    "time": 139.0,
-                    "value": 2
-                },
-                {
-                    "time": 139.5,
-                    "value": 1
-                },
-                {
-                    "time": 140.0,
-                    "value": 1
-                },
-                {
-                    "time": 140.5,
-                    "value": 1
-                },
-                {
-                    "time": 141.0,
-                    "value": 2
-                },
-                {
-                    "time": 141.5,
-                    "value": 2
-                },
-                {
-                    "time": 142.0,
-                    "value": 1
-                },
-                {
-                    "time": 142.5,
-                    "value": 2
-                },
-                {
-                    "time": 143.0,
-                    "value": 2
-                },
-                {
-                    "time": 143.5,
-                    "value": 1
-                },
-                {
-                    "time": 144.0,
-                    "value": 2
-                },
-                {
-                    "time": 144.5,
-                    "value": 2
-                },
-                {
-                    "time": 145.0,
-                    "value": 2
-                },
-                {
-                    "time": 145.5,
-                    "value": 2
-                },
-                {
-                    "time": 146.0,
-                    "value": 2
-                },
-                {
-                    "time": 146.5,
-                    "value": 1
-                },
-                {
-                    "time": 147.0,
-                    "value": 2
-                },
-                {
-                    "time": 147.5,
-                    "value": 2
-                },
-                {
-                    "time": 148.0,
-                    "value": 1
-                },
-                {
-                    "time": 148.5,
-                    "value": 1
-                },
-                {
-                    "time": 149.0,
-                    "value": 2
-                },
-                {
-                    "time": 149.5,
-                    "value": 1
-                },
-                {
-                    "time": 150.0,
-                    "value": 2
-                },
-                {
-                    "time": 150.5,
-                    "value": 1
-                },
-                {
-                    "time": 151.0,
-                    "value": 2
-                },
-                {
-                    "time": 151.5,
-                    "value": 1
-                },
-                {
-                    "time": 152.0,
-                    "value": 2
-                },
-                {
-                    "time": 152.5,
-                    "value": 1
-                },
-                {
-                    "time": 153.0,
-                    "value": 2
-                },
-                {
-                    "time": 153.5,
-                    "value": 2
-                },
-                {
-                    "time": 154.0,
-                    "value": 2
-                },
-                {
-                    "time": 154.5,
-                    "value": 1
-                },
-                {
-                    "time": 155.0,
-                    "value": 2
-                },
-                {
-                    "time": 155.5,
-                    "value": 1
-                },
-                {
-                    "time": 156.0,
-                    "value": 1
-                },
-                {
-                    "time": 156.5,
-                    "value": 2
-                },
-                {
-                    "time": 157.0,
-                    "value": 1
-                },
-                {
-                    "time": 157.5,
-                    "value": 1
-                },
-                {
-                    "time": 158.0,
-                    "value": 2
-                },
-                {
-                    "time": 158.5,
-                    "value": 1
-                },
-                {
-                    "time": 159.0,
-                    "value": 2
-                },
-                {
-                    "time": 159.5,
-                    "value": 1
-                },
-                {
-                    "time": 160.0,
-                    "value": 1
-                },
-                {
-                    "time": 160.5,
-                    "value": 1
-                },
-                {
-                    "time": 161.0,
-                    "value": 2
-                },
-                {
-                    "time": 161.5,
-                    "value": 2
-                },
-                {
-                    "time": 162.0,
-                    "value": 2
-                },
-                {
-                    "time": 162.5,
-                    "value": 2
-                },
-                {
-                    "time": 163.0,
-                    "value": 1
-                },
-                {
-                    "time": 163.5,
-                    "value": 1
-                },
-                {
-                    "time": 164.0,
-                    "value": 1
-                },
-                {
-                    "time": 164.5,
-                    "value": 2
-                },
-                {
-                    "time": 165.0,
-                    "value": 2
-                },
-                {
-                    "time": 165.5,
-                    "value": 2
-                },
-                {
-                    "time": 166.0,
-                    "value": 1
-                },
-                {
-                    "time": 166.5,
-                    "value": 2
-                },
-                {
-                    "time": 167.0,
-                    "value": 1
-                },
-                {
-                    "time": 167.5,
-                    "value": 2
-                },
-                {
-                    "time": 168.0,
-                    "value": 1
-                },
-                {
-                    "time": 168.5,
-                    "value": 1
-                },
-                {
-                    "time": 169.0,
-                    "value": 2
-                },
-                {
-                    "time": 169.5,
-                    "value": 1
-                },
-                {
-                    "time": 170.0,
-                    "value": 1
-                },
-                {
-                    "time": 170.5,
-                    "value": 2
-                },
-                {
-                    "time": 171.0,
-                    "value": 1
-                },
-                {
-                    "time": 171.5,
-                    "value": 2
-                },
-                {
-                    "time": 172.0,
-                    "value": 1
-                },
-                {
-                    "time": 172.5,
-                    "value": 1
-                },
-                {
-                    "time": 173.0,
-                    "value": 2
-                },
-                {
-                    "time": 173.5,
-                    "value": 1
-                },
-                {
-                    "time": 174.0,
-                    "value": 2
-                },
-                {
-                    "time": 174.5,
-                    "value": 2
-                },
-                {
-                    "time": 175.0,
-                    "value": 1
-                },
-                {
-                    "time": 175.5,
-                    "value": 1
-                },
-                {
-                    "time": 176.0,
-                    "value": 2
-                },
-                {
-                    "time": 176.5,
-                    "value": 2
-                },
-                {
-                    "time": 177.0,
-                    "value": 1
-                },
-                {
-                    "time": 177.5,
-                    "value": 1
-                },
-                {
-                    "time": 178.0,
-                    "value": 2
-                },
-                {
-                    "time": 178.5,
-                    "value": 1
-                },
-                {
-                    "time": 179.0,
-                    "value": 1
-                },
-                {
-                    "time": 179.5,
-                    "value": 2
-                },
-                {
-                    "time": 180.0,
-                    "value": 2
-                },
-                {
-                    "time": 180.5,
-                    "value": 1
-                },
-                {
-                    "time": 181.0,
-                    "value": 1
-                },
-                {
-                    "time": 181.5,
-                    "value": 1
-                },
-                {
-                    "time": 182.0,
-                    "value": 1
-                },
-                {
-                    "time": 182.5,
-                    "value": 1
-                },
-                {
-                    "time": 183.0,
-                    "value": 1
-                },
-                {
-                    "time": 183.5,
-                    "value": 1
-                },
-                {
-                    "time": 184.0,
-                    "value": 2
-                },
-                {
-                    "time": 184.5,
-                    "value": 1
-                },
-                {
-                    "time": 185.0,
-                    "value": 1
-                },
-                {
-                    "time": 185.5,
-                    "value": 1
-                },
-                {
-                    "time": 186.0,
-                    "value": 1
-                },
-                {
-                    "time": 186.5,
-                    "value": 1
-                },
-                {
-                    "time": 187.0,
-                    "value": 1
-                },
-                {
-                    "time": 187.5,
-                    "value": 1
-                },
-                {
-                    "time": 188.0,
-                    "value": 1
-                },
-                {
-                    "time": 188.5,
-                    "value": 1
-                },
-                {
-                    "time": 189.0,
-                    "value": 2
-                },
-                {
-                    "time": 189.5,
-                    "value": 1
-                },
-                {
-                    "time": 190.0,
-                    "value": 2
-                },
-                {
-                    "time": 190.5,
-                    "value": 1
-                },
-                {
-                    "time": 191.0,
-                    "value": 1
-                },
-                {
-                    "time": 191.5,
-                    "value": 1
-                },
-                {
-                    "time": 192.0,
-                    "value": 1
-                },
-                {
-                    "time": 192.5,
-                    "value": 1
-                },
-                {
-                    "time": 193.0,
-                    "value": 2
-                },
-                {
-                    "time": 193.5,
-                    "value": 1
-                },
-                {
-                    "time": 194.0,
-                    "value": 1
-                },
-                {
-                    "time": 194.5,
-                    "value": 2
-                },
-                {
-                    "time": 195.0,
-                    "value": 1
-                },
-                {
-                    "time": 195.5,
-                    "value": 2
-                },
-                {
-                    "time": 196.0,
-                    "value": 1
-                },
-                {
-                    "time": 196.5,
-                    "value": 1
-                },
-                {
-                    "time": 197.0,
-                    "value": 1
-                },
-                {
-                    "time": 197.5,
-                    "value": 1
-                },
-                {
-                    "time": 198.0,
-                    "value": 1
-                },
-                {
-                    "time": 198.5,
-                    "value": 1
-                },
-                {
-                    "time": 199.0,
-                    "value": 1
-                },
-                {
-                    "time": 199.5,
-                    "value": 1
-                },
-                {
-                    "time": 200.0,
-                    "value": 1
-                },
-                {
-                    "time": 200.5,
-                    "value": 1
-                },
-                {
-                    "time": 201.0,
-                    "value": 1
-                },
-                {
-                    "time": 201.5,
-                    "value": 1
-                },
-                {
-                    "time": 202.0,
-                    "value": 1
-                },
-                {
-                    "time": 202.5,
-                    "value": 1
-                },
-                {
-                    "time": 203.0,
-                    "value": 1
+                    "time": 7.23199987411499,
+                    "value": 0
                 }
             ]
         },
         {
             "key": "GRIMIGAN - ПУК ФОНК",
+            "speed": 0,
             "values": [
                 {
                     "time": 0.0,
@@ -9194,6 +7878,7 @@
         },
         {
             "key": "Ilmari Hakkola - Bad Piggies Theme",
+            "speed": 0,
             "values": [
                 {
                     "time": 0.0,
@@ -11775,6 +10460,7 @@
         },
         {
             "key": "Пафосная музыка - Под которую удобно ебать чугун",
+            "speed": 0,
             "values": [
                 {
                     "time": 0.0,

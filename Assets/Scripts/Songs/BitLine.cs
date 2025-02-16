@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,32 +10,46 @@ public class BitLine : MonoBehaviour
     public float GetSpeed() => speed;
 
     [SerializeField]
-    private GameObject start, end, clicker;
+    protected GameObject start, end, clicker;
     [SerializeField]
     private GameObject bit;
     [SerializeField] 
     private float speed = 5f; // Скорость движения битов
     [SerializeField]
-    private string tochedWASD;
+    protected string tochedWASD;
 
-    private List<GameObject> bits = new List<GameObject>();
+    protected List<(GameObject, DataBit)> bits = new List<(GameObject, DataBit)>();
 
 
-    public void CreateBit()
+    public void CreateBit(DataBit dataBit)
     {
-        bits.Add(Instantiate(bit, start.transform));
+        bits.Add((Instantiate(bit, start.transform), dataBit));
     }
 
-    private void Update()
+    public void CreateBitOnEnd(DataBit dataBit)
+    {
+        bits.Add((Instantiate(bit, clicker.transform), dataBit));
+    }
+
+    public void Clear()
+    {
+        while (bits.Count != 0)
+        {
+            Destroy(bits[0].Item1);
+            bits.Remove(bits[0]);
+        }
+    }
+
+    protected void Update()
     {
         if (Input.GetKeyDown(GetKey(tochedWASD)))
         {
             List<int> removeId = new List<int>();
-            foreach (GameObject item in bits)
+            foreach ((GameObject, DataBit) item in bits)
             {
-                if (item != null && clicker != null)
+                if (item.Item1 != null && clicker != null)
                 {
-                    float distance = Vector3.Distance(item.transform.position, clicker.transform.position);
+                    float distance = Vector3.Distance(item.Item1.transform.position, clicker.transform.position);
                     Debug.Log($"Расстояние до clicker: {distance}");
                     if (distance < 0.8f)
                     {
@@ -44,7 +59,7 @@ public class BitLine : MonoBehaviour
             }
             foreach (var id in removeId)
             {
-                Destroy(bits[id]);
+                Destroy(bits[id].Item1);
                 bits.RemoveAt(id);
             }
         }
@@ -52,34 +67,27 @@ public class BitLine : MonoBehaviour
         MoveBits();
     }
 
-    private KeyCode GetKey(string str)
+    protected KeyCode GetKey(string str)
     {
-        switch (str)
+        if (Enum.TryParse(str.ToUpper(), out KeyCode key))
         {
-            case "A":
-                return KeyCode.A;
-            case "W":
-                return KeyCode.W;
-            case "S":
-                return KeyCode.S;
-            case "D":
-                return KeyCode.D;
-            default:
-                return KeyCode.None;
+            return key;
         }
+        return KeyCode.None;
     }
 
-    private void MoveBits()
+
+    protected void MoveBits()
     {
         for (int i = bits.Count - 1; i >= 0; i--)
         {
-            if (bits[i] != null)
+            if (bits[i].Item1 != null)
             {
-                bits[i].transform.position = Vector3.MoveTowards(bits[i].transform.position, end.transform.position, speed * Time.deltaTime);
+                bits[i].Item1.transform.position = Vector3.MoveTowards(bits[i].Item1.transform.position, end.transform.position, speed * Time.deltaTime);
 
-                if (Vector3.Distance(bits[i].transform.position, end.transform.position) < 0.1f)
+                if (Vector3.Distance(bits[i].Item1.transform.position, end.transform.position) < 0.1f)
                 {
-                    Destroy(bits[i]);
+                    Destroy(bits[i].Item1);
                     bits.RemoveAt(i);
                 }
             }
