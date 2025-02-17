@@ -173,6 +173,7 @@ MonoBehaviour:
   bitLineW: {fileID: 1291550128}
   bitLineS: {fileID: 167874576}
   bitLineD: {fileID: 1441928229}
+  scores: []
   redactorTime: {fileID: 2140803202}
   redactorToggle: {fileID: 1241918353}
 --- !u!1 &29997875
@@ -309,12 +310,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34fda737d46637646a29aaf4c1951c55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  songDataController: {fileID: 25491757}
   start: {fileID: 2094335637}
   end: {fileID: 1019095073}
   clicker: {fileID: 242683136}
   bit: {fileID: 1794273924063527873, guid: b03adebff99f6634a88789af4f217cf2, type: 3}
   speed: 5
   tochedWASD: S
+  force: 2
+  lifetime: 2
+  textPrefab: {fileID: 6865949410071566484, guid: 85a2bfe495b01f2469a41b77b849d1e1, type: 3}
   songDataControllerRedactor: {fileID: 25491757}
   redactorSource: {fileID: 2060611835}
   numLine: 2
@@ -1334,12 +1339,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34fda737d46637646a29aaf4c1951c55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  songDataController: {fileID: 25491757}
   start: {fileID: 457635789}
   end: {fileID: 1244761683}
   clicker: {fileID: 1835521498}
   bit: {fileID: 1794273924063527873, guid: b03adebff99f6634a88789af4f217cf2, type: 3}
   speed: 5
   tochedWASD: A
+  force: 2
+  lifetime: 2
+  textPrefab: {fileID: 6865949410071566484, guid: 85a2bfe495b01f2469a41b77b849d1e1, type: 3}
   songDataControllerRedactor: {fileID: 25491757}
   redactorSource: {fileID: 2060611835}
   numLine: 0
@@ -1973,12 +1982,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34fda737d46637646a29aaf4c1951c55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  songDataController: {fileID: 25491757}
   start: {fileID: 1019222996}
   end: {fileID: 1442640945}
   clicker: {fileID: 29997875}
   bit: {fileID: 1794273924063527873, guid: b03adebff99f6634a88789af4f217cf2, type: 3}
   speed: 5
   tochedWASD: W
+  force: 2
+  lifetime: 2
+  textPrefab: {fileID: 6865949410071566484, guid: 85a2bfe495b01f2469a41b77b849d1e1, type: 3}
   songDataControllerRedactor: {fileID: 25491757}
   redactorSource: {fileID: 2060611835}
   numLine: 1
@@ -2029,12 +2042,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34fda737d46637646a29aaf4c1951c55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  songDataController: {fileID: 25491757}
   start: {fileID: 1150465694}
   end: {fileID: 1246607234}
   clicker: {fileID: 1766894579}
   bit: {fileID: 1794273924063527873, guid: b03adebff99f6634a88789af4f217cf2, type: 3}
   speed: 5
   tochedWASD: D
+  force: 2
+  lifetime: 2
+  textPrefab: {fileID: 6865949410071566484, guid: 85a2bfe495b01f2469a41b77b849d1e1, type: 3}
   songDataControllerRedactor: {fileID: 25491757}
   redactorSource: {fileID: 2060611835}
   numLine: 3

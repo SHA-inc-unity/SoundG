@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class BitLine : MonoBehaviour
@@ -16,9 +17,13 @@ public class BitLine : MonoBehaviour
     [SerializeField]
     private GameObject bit;
     [SerializeField] 
-    private float speed = 5f; // Скорость движения битов
+    private float speed = 5f;
     [SerializeField]
     protected string tochedWASD;
+    [SerializeField]
+    private float force = 2f, lifetime = 2f;
+    [SerializeField]
+    private GameObject textPrefab;
 
     protected List<(GameObject, DataBit)> bits = new List<(GameObject, DataBit)>();
 
@@ -52,24 +57,33 @@ public class BitLine : MonoBehaviour
                 if (item.Item1 != null && clicker != null)
                 {
                     float distance = Vector3.Distance(item.Item1.transform.position, clicker.transform.position);
-                    Debug.Log($"Расстояние до clicker: {distance}"); 
+                    Scores scores = Scores.Lol;
                     if (distance < 0.1f)
                     {
-                        AddScore();
-                        AddScoreEvent();
-                        removeId.Add(bits.IndexOf(item));
+                        scores = Scores.Perfect;
                     }
                     else if (distance < 0.2f)
                     {
-                        removeId.Add(bits.IndexOf(item));
+                        scores = Scores.Good;
                     }
                     else if (distance < 0.4f)
                     {
-                        removeId.Add(bits.IndexOf(item));
+                        scores = Scores.Normal;
                     }
                     else if (distance < 0.8f)
                     {
-                        removeId.Add(bits.IndexOf(item));
+                        scores = Scores.Bad;
+                    }
+
+                    if (scores != Scores.Lol)
+                    {
+                        ScoreData scoreData = songDataController.AddScore(scores);
+                        if (scoreData != null)
+                        {
+                            AddScoreEvent(scoreData);
+                            removeId.Add(bits.IndexOf(item));
+                            break;
+                        }
                     }
                 }
             }
@@ -81,6 +95,28 @@ public class BitLine : MonoBehaviour
         }
 
         MoveBits();
+    }
+
+    private void AddScoreEvent(ScoreData scores)
+    {
+        SpawnText(scores.scores.ToString(), scores.color);
+    }
+
+    private void SpawnText(string message, Color color)
+    {
+        GameObject newTextObj = Instantiate(textPrefab, clicker.transform.position, Quaternion.identity);
+        TextMeshPro tmp = newTextObj.GetComponent<TextMeshPro>();
+
+        tmp.text = message;
+        tmp.color = color;
+
+        Rigidbody rb = newTextObj.AddComponent<Rigidbody>();
+        rb.useGravity = false;
+
+        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * force;
+        rb.linearVelocity = randomDirection;
+
+        Destroy(newTextObj, lifetime);
     }
 
     protected KeyCode GetKey(string str)

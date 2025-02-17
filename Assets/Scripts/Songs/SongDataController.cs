@@ -1,5 +1,28 @@
+using NUnit.Framework;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+
+[Serializable]
+public enum Scores
+{
+    Perfect,
+    Good,
+    Normal,
+    Bad,
+    Lol,
+}
+[Serializable]
+public class ScoreData
+{
+    [SerializeField]
+    public Scores scores;
+    [SerializeField]
+    public int num;
+    [SerializeField]
+    public Color color;
+}
 
 public class SongDataController : MonoBehaviour
 {
@@ -9,8 +32,22 @@ public class SongDataController : MonoBehaviour
     protected AudioSource audioSource;
     [SerializeField]
     protected BitLine bitLineA, bitLineW, bitLineS, bitLineD;
+    [SerializeField]
+    private List<ScoreData> scores;
 
     private SoundData selectedSong;
+    private int score = 0;
+
+    public ScoreData AddScore(Scores x)
+    {
+        for (int i = 0; i < scores.Count; i++)
+            if (scores[i].scores == x)
+            {
+                score += scores[i].num;
+                return scores[i];
+            }
+        return null;
+    }
 
     protected void Start()
     {
