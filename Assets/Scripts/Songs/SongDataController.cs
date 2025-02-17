@@ -32,8 +32,12 @@ public class SongDataController : MonoBehaviour
         float distance = Vector3.Distance(bitLineA.GetStartPosition(), bitLineA.GetEndPosition());
         float travelTime = distance / bitLineA.GetSpeed();
 
-        foreach (var bit in SelectedSong.Bits)
+        int i = 0;
+        while (i < SelectedSong.Bits.Count)
         {
+            var bit = SelectedSong.Bits[i];
+            i++;
+
             float startTime = bit.time - travelTime;
             if (startTime < startTimeOffset)
                 continue;

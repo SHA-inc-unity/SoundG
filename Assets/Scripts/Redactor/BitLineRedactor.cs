@@ -38,9 +38,17 @@ public class BitLineRedactor : BitLine
 
     private void AddBit()
     {
-        JsonDataSaver.TimeValuePair timeValuePair = new JsonDataSaver.TimeValuePair(redactorSource.time, numLine);
-        selectedSong.Bits.Add(timeValuePair);
-        CreateBitOnEnd(new DataBit(timeValuePair));
+        try
+        {
+            JsonDataSaver.TimeValuePair timeValuePair = new JsonDataSaver.TimeValuePair(redactorSource.time, numLine);
+            selectedSong.Bits.Add(timeValuePair);
+            CreateBitOnEnd(new DataBit(timeValuePair));
+        }
+        catch (System.Exception)
+        {
+
+            throw;
+        }
     }
 
     private void RemoveBit()
@@ -61,8 +69,9 @@ public class BitLineRedactor : BitLine
         foreach (var id in removeId)
         {
             Destroy(bits[id].Item1);
-            bits.RemoveAt(id);
             selectedSong.Bits.Remove(bits[id].Item2.data);
+
+            bits.RemoveAt(id);
         }
     }
 }

@@ -1,5 +1,7 @@
+using NUnit.Framework;
 using SFB;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
@@ -15,6 +17,7 @@ public class PanelCreateMusic : MonoBehaviour
 
     private Sprite image;
     private string enteredText;
+    private LoadSounds loadSounds = new LoadSounds();
 
     public void PickAudioFile()
     {
@@ -56,7 +59,20 @@ public class PanelCreateMusic : MonoBehaviour
 
     public void OpenRedactorOfBits()
     {
-        GameData.SetSelectedSong(new SoundData(enteredText, image, audioSource.clip, new System.Collections.Generic.List<JsonDataSaver.TimeValuePair>()));
+        List<JsonDataSaver.TimeValuePair> bitList = new List<JsonDataSaver.TimeValuePair>();
+
+        try
+        {
+            List<SoundData> bits = loadSounds.LoadAllSounds(0);
+            bits[0].Name == enteredText;
+        }
+        catch (System.Exception)
+        {
+
+            throw;
+        }
+
+        GameData.SetSelectedSong(new SoundData(enteredText, image, audioSource.clip, bitList));
         SceneManager.LoadScene("BitsRedactor");
     }
 

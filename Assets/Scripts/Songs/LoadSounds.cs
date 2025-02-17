@@ -5,7 +5,7 @@ using static JsonDataSaver;
 
 public class LoadSounds
 {
-    public List<SoundData> LoadAllSounds(bool reanalize)
+    public List<SoundData> LoadAllSounds(int reanalize)
     {
         List<SoundData> soundList = new List<SoundData>();
 
@@ -18,13 +18,16 @@ public class LoadSounds
             string soundName = clip.name;
             Sprite image = LoadImageForSound(soundName);
 
-            if (!bits.ContainsKey(soundName))
+            if (reanalize == 1)
             {
-                List<TimeValuePair> x = BitGenerator.AnalyzeMusic(clip);
-                bits.Add(soundName, x);
+                if (!bits.ContainsKey(soundName))
+                {
+                    List<TimeValuePair> x = BitGenerator.AnalyzeMusic(clip);
+                    bits.Add(soundName, x);
+                }
             }
 
-            if (reanalize)
+            if (reanalize == 2)
             {
                 List<TimeValuePair> x = BitGenerator.AnalyzeMusic(clip);
                 bits[soundName] = x;
