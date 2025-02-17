@@ -59,21 +59,13 @@ public class BitLine : MonoBehaviour
                     float distance = Vector3.Distance(item.Item1.transform.position, clicker.transform.position);
                     Scores scores = Scores.Lol;
                     if (distance < 0.1f)
-                    {
                         scores = Scores.Perfect;
-                    }
                     else if (distance < 0.2f)
-                    {
                         scores = Scores.Good;
-                    }
                     else if (distance < 0.4f)
-                    {
                         scores = Scores.Normal;
-                    }
                     else if (distance < 0.8f)
-                    {
                         scores = Scores.Bad;
-                    }
 
                     if (scores != Scores.Lol)
                     {

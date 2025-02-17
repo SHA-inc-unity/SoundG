@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 [Serializable]
@@ -27,6 +28,14 @@ public class ScoreData
 public class SongDataController : MonoBehaviour
 {
     public SoundData SelectedSong { get => selectedSong; set => selectedSong = value; }
+    public int Score { 
+        get => score; 
+        set 
+        {
+            score = value;
+            scoreText.text = score.ToString();
+        } 
+    }
 
     [SerializeField]
     protected AudioSource audioSource;
@@ -34,6 +43,8 @@ public class SongDataController : MonoBehaviour
     protected BitLine bitLineA, bitLineW, bitLineS, bitLineD;
     [SerializeField]
     private List<ScoreData> scores;
+    [SerializeField]
+    private TMP_Text scoreText;
 
     private SoundData selectedSong;
     private int score = 0;
@@ -43,7 +54,7 @@ public class SongDataController : MonoBehaviour
         for (int i = 0; i < scores.Count; i++)
             if (scores[i].scores == x)
             {
-                score += scores[i].num;
+                Score += scores[i].num;
                 return scores[i];
             }
         return null;
