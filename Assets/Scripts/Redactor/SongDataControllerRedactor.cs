@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SongDataControllerRedactor : SongDataController
@@ -23,6 +24,12 @@ public class SongDataControllerRedactor : SongDataController
             StopAllCoroutines();
             StartCoroutine(PlayBits(time));
         }
+    }
+
+    public void SaveAndExitBits()
+    {
+        SaveBits();
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void SaveBits()

@@ -10,6 +10,8 @@ public class BitLine : MonoBehaviour
     public float GetSpeed() => speed;
 
     [SerializeField]
+    private SongDataController songDataController;
+    [SerializeField]
     protected GameObject start, end, clicker;
     [SerializeField]
     private GameObject bit;
@@ -50,8 +52,22 @@ public class BitLine : MonoBehaviour
                 if (item.Item1 != null && clicker != null)
                 {
                     float distance = Vector3.Distance(item.Item1.transform.position, clicker.transform.position);
-                    Debug.Log($"Расстояние до clicker: {distance}");
-                    if (distance < 0.8f)
+                    Debug.Log($"Расстояние до clicker: {distance}"); 
+                    if (distance < 0.1f)
+                    {
+                        AddScore();
+                        AddScoreEvent();
+                        removeId.Add(bits.IndexOf(item));
+                    }
+                    else if (distance < 0.2f)
+                    {
+                        removeId.Add(bits.IndexOf(item));
+                    }
+                    else if (distance < 0.4f)
+                    {
+                        removeId.Add(bits.IndexOf(item));
+                    }
+                    else if (distance < 0.8f)
                     {
                         removeId.Add(bits.IndexOf(item));
                     }

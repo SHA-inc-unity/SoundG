@@ -64,11 +64,15 @@ public class PanelCreateMusic : MonoBehaviour
         try
         {
             List<SoundData> bits = loadSounds.LoadAllSounds(0);
-            bits[0].Name == enteredText;
+            foreach (SoundData sound in bits)
+                if (sound.Name == enteredText)
+                {
+                    bitList = sound.Bits;
+                    break;
+                }
         }
         catch (System.Exception)
         {
-
             throw;
         }
 
