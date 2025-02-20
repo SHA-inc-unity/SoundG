@@ -12,6 +12,7 @@ public enum PanelsName
     redactorMusic,
     scoresList,
     publishMusic,
+    loginRegister,
 }
 
 public class PanelController : MonoBehaviour

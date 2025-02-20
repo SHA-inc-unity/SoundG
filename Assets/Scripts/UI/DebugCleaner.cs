@@ -5,7 +5,7 @@ public class DebugCleaner : MonoBehaviour
 {
     void Awake()
     {
-#if !UNITY_EDITOR && !DEVELOPMENT_BUILD
+#if !UNITY_EDITOR
         Destroy(gameObject);
 #endif
     }
