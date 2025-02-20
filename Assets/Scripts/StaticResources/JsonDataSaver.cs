@@ -8,36 +8,36 @@ public static class JsonDataSaver
     private static readonly string FilePathBitList = "Assets/Resources/data.json";
     private static readonly string FilePathOwnerData = "owned.json";
 
-    public static void SaveBitList(Dictionary<string, List<TimeValuePair>> data)
+    public static void SaveBitList(Dictionary<string, (int, List<TimeValuePair>)> data)
     {
+#if UNITY_EDITOR
         var wrapper = new WrapperDataEntry { items = new List<DataEntry>() };
         foreach (var kv in data)
         {
-            wrapper.items.Add(new DataEntry { key = kv.Key, values = kv.Value });
+            wrapper.items.Add(new DataEntry { key = kv.Key, BPM = kv.Value.Item1, values = kv.Value.Item2 });
         }
 
         string json = JsonUtility.ToJson(wrapper, true);
         File.WriteAllText(FilePathBitList, json);
 
-#if UNITY_EDITOR
         UnityEditor.AssetDatabase.Refresh(); // Обновляет файлы в Unity Editor
 #endif
     }
 
-    public static Dictionary<string, List<TimeValuePair>> LoadBitList()
+    public static Dictionary<string, (int, List<TimeValuePair>)> LoadBitList()
     {
         TextAsset jsonFile = Resources.Load<TextAsset>("data");
         if (jsonFile == null)
         {
             Debug.LogError("JSON file not found in Resources!");
-            return new Dictionary<string, List<TimeValuePair>>();
+            return new Dictionary<string, (int, List<TimeValuePair>)>();
         }
 
         WrapperDataEntry wrapper = JsonUtility.FromJson<WrapperDataEntry>(jsonFile.text);
-        var dict = new Dictionary<string, List<TimeValuePair>>();
+        var dict = new Dictionary<string, (int, List<TimeValuePair>)>();
         foreach (var entry in wrapper.items)
         {
-            dict[entry.key] = entry.values;
+            dict[entry.key] = (entry.BPM, entry.values);
         }
         return dict;
     }
@@ -121,6 +121,7 @@ public static class JsonDataSaver
     [System.Serializable]
     private class WrapperDataEntry
     {
+        public int BPM;
         public List<DataEntry> items;
     }
 
@@ -128,7 +129,7 @@ public static class JsonDataSaver
     private class DataEntry
     {
         public string key;
-        public int speed;
+        public int BPM;
         public List<TimeValuePair> values;
     }
 

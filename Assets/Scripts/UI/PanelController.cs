@@ -23,6 +23,8 @@ public class PanelController : MonoBehaviour
     void Start()
     {
         ChangePanel(PanelsName.startGame);
+
+        var x = NetServerController.Instance;
     }
 
     public void ChangePanel(PanelsName newPanel)

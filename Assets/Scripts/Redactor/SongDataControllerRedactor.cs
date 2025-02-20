@@ -36,9 +36,9 @@ public class SongDataControllerRedactor : SongDataController
     {
         var json = JsonDataSaver.LoadBitList();
         if (json.ContainsKey(SelectedSong.Name))
-            json[SelectedSong.Name] = SelectedSong.Bits;
+            json[SelectedSong.Name] = (SelectedSong.BPM, SelectedSong.Bits);
         else
-            json.Add(SelectedSong.Name, SelectedSong.Bits);
+            json.Add(SelectedSong.Name, (SelectedSong.BPM, SelectedSong.Bits));
         JsonDataSaver.SaveBitList(json);
     }
 

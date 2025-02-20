@@ -22,9 +22,13 @@ public class SetLevelList : MonoBehaviour
         soundInfoPanel.RefreshSoundInfoPanel(sound);
     }
 
-    private void Start()
+    private async void OnEnable()
     {
-        List<SoundData> soundList = loadSounds.LoadAllSounds(1);
+        List<SoundData> soundList = await loadSounds.LoadAllSounds(1);
+        for (int i = contentSoundList.childCount - 1; i >= 0; i--)
+        {
+            Destroy(contentSoundList.GetChild(i).gameObject);
+        }
         foreach (SoundData data in soundList)
         {
             SoundObject soundObject = Instantiate(standartSoundObject, contentSoundList);

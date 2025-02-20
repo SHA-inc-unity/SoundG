@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using static JsonDataSaver;
 
 public class NetServerController : MonoBehaviour
 {
@@ -40,11 +41,6 @@ public class NetServerController : MonoBehaviour
 
     private async Task Connect()
     {
-        if (webSocket != null)
-        {
-            await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
-        }
-
         webSocket = new ClientWebSocket();
 
         try
@@ -178,7 +174,7 @@ public class NetServerController : MonoBehaviour
 
 
 
-    public async Task<string> Register(string login, string password)
+    public async Task<string> Register(string login, string email, string password)
     {
         var tcs = new TaskCompletionSource<string>();
         int requestId = GetRequestId();
@@ -198,9 +194,14 @@ public class NetServerController : MonoBehaviour
             }
         });
 
-        await SendRequest(requestId, "SendMessage", $"{login} {hashedPassword}");
+        await SendRequest(requestId, "Register", $"{login} {email} {hashedPassword}");
 
         return await tcs.Task;
+    }
+
+    public string GetHashPass(string password)
+    {
+        return ComputeSha256Hash(password);
     }
 
     public async Task<string> Login(string login, string password)
@@ -223,10 +224,38 @@ public class NetServerController : MonoBehaviour
             }
         });
 
-        await SendRequest(requestId, "SendMessage", $"{login} {hashedPassword}");
+        await SendRequest(requestId, "Login", $"{login} {hashedPassword}");
 
         return await tcs.Task;
     }
+
+    public async Task<List<SoundData>> LoadSongs(string username, string password)
+    {
+        var tcs = new TaskCompletionSource<List<SoundData>>();
+        int requestId = GetRequestId();
+
+        // Хешируем пароль
+        string hashedPassword = ComputeSha256Hash(password);
+
+        SetOnMessageReceivedListener(requestId, parts =>
+        {
+            if (parts.Count > 0)
+            {
+                // Разбираем ответ сервера
+                List<SoundData> soundDataList = ParseSongs(parts[0]);
+                tcs.SetResult(soundDataList);
+            }
+            else
+            {
+                tcs.SetResult(new List<SoundData>()); // Если ответа нет, возвращаем пустой список
+            }
+        });
+
+        await SendRequest(requestId, "GetTopSongs", $"{username} {hashedPassword}");
+
+        return await tcs.Task;
+    }
+
 
     private string ComputeSha256Hash(string rawData)
     {
@@ -240,5 +269,59 @@ public class NetServerController : MonoBehaviour
             }
             return builder.ToString();
         }
+    }
+
+    /// <summary>
+    /// Разбирает ответ сервера и формирует список SoundData.
+    /// </summary>
+    private List<SoundData> ParseSongs(string serverResponse)
+    {
+        List<SoundData> soundDataList = new List<SoundData>();
+
+        string[] parts = serverResponse.Split(' ');
+
+        if (parts.Length == 0 || parts[0] != "true")
+        {
+            Debug.LogError("Ошибка загрузки песен или сервер вернул пустой ответ.");
+            return soundDataList;
+        }
+
+        for (int i = 1; i < parts.Length; i++) // Пропускаем "true"
+        {
+            string[] songParts = parts[i].Split('_');
+            if (songParts.Length != 4) continue; // Пропускаем некорректные строки
+
+            string songName = songParts[0];
+            int price = int.Parse(songParts[1]);
+            int buyCount = int.Parse(songParts[2]);
+            OwnerType ownType = ConvertToOwnerType(songParts[3]);
+
+            // Создаём объект SoundData с null для изображения и аудиофайла
+            SoundData soundData = new SoundData(
+                songName,
+                null, // Картинка отсутствует
+                null, // Аудиофайл отсутствует
+                new List<TimeValuePair>(), // Можно дополнить загрузку битов позже
+                new OwnerData(songName, ownType),
+                0
+            );
+
+            soundDataList.Add(soundData);
+        }
+
+        return soundDataList;
+    }
+
+    /// <summary>
+    /// Конвертирует строковое значение типа владения в перечисление OwnerType
+    /// </summary>
+    private OwnerType ConvertToOwnerType(string ownTypeStr)
+    {
+        return ownTypeStr switch
+        {
+            "buyed" => OwnerType.buyed,
+            "owner" => OwnerType.owner,
+            _ => OwnerType.load
+        };
     }
 }

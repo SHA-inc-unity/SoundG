@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static JsonDataSaver;
 
 public class PanelCreateMusic : MonoBehaviour
 {
@@ -14,10 +15,18 @@ public class PanelCreateMusic : MonoBehaviour
     [SerializeField] private Button redactor, playButton;
     [SerializeField] private Image previewImage; // UI-элемент для отображения загруженной картинки
     [SerializeField] private TMP_Text songTitleText; // UI-элемент для отображения названия музыки
+    [SerializeField] private TMP_InputField BPMInputField;
 
     private Sprite image;
     private string enteredText;
     private LoadSounds loadSounds = new LoadSounds();
+    private int BPM = 0;
+
+    public void CheckBPMInputField()
+    {
+        BPM = int.TryParse(BPMInputField.text, out int bpm) ? bpm : 0;
+        UnlockRedactor();
+    }
 
     public void PickAudioFile()
     {
@@ -63,11 +72,11 @@ public class PanelCreateMusic : MonoBehaviour
 
         try
         {
-            List<SoundData> bits = loadSounds.LoadAllSounds(0);
-            foreach (SoundData sound in bits)
-                if (sound.Name == enteredText)
+            Dictionary<string, (int, List<TimeValuePair>)> bits = loadSounds.LoadBits();
+            foreach (var sound in bits)
+                if (sound.Key == enteredText)
                 {
-                    bitList = sound.Bits;
+                    bitList = sound.Value.Item2;
                     break;
                 }
         }
@@ -78,8 +87,8 @@ public class PanelCreateMusic : MonoBehaviour
 
         // Сделать проверку на редактуру не своего
 
-        GameData.SetSelectedSong(new SoundData(enteredText, image, audioSource.clip, bitList, new OwnerData("null", OwnerType.owner)));
-        SceneManager.LoadScene("BitsRedactor");
+        GameData.SetSelectedSong(new SoundData(enteredText, image, audioSource.clip, bitList, new OwnerData("null", OwnerType.owner), BPM));
+        SceneManager.LoadScene("BitsRedactor2");
     }
 
     private IEnumerator LoadAudio(string path)
@@ -131,7 +140,13 @@ public class PanelCreateMusic : MonoBehaviour
 
     private void UnlockRedactor()
     {
-        redactor.interactable = true;
-        playButton.interactable = true;
+        if (audioSource.clip != null)
+        {
+            if (BPM != 0)
+            {
+                redactor.interactable = true;
+            }
+            playButton.interactable = true;
+        }
     }
 }

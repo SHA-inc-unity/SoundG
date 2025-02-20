@@ -10,9 +10,9 @@ public class PublishMusic : MonoBehaviour
 
     private LoadSounds loadSounds = new LoadSounds();
 
-    private void Start()
+    private async void Start()
     {
-        List<SoundData> soundList = loadSounds.LoadAllSounds(1);
+        List<SoundData> soundList = await loadSounds.LoadAllSounds(1);
         foreach (SoundData data in soundList)
         {
             //SoundObject soundObject = Instantiate(standartSoundPublishObject, contentSoundList);
