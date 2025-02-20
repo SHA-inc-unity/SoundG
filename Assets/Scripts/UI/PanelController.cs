@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public enum PanelsName
 {
     startGame,
@@ -10,6 +11,7 @@ public enum PanelsName
     createMusic,
     redactorMusic,
     scoresList,
+    publishMusic,
 }
 
 public class PanelController : MonoBehaviour

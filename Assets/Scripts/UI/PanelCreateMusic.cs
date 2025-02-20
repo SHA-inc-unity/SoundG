@@ -76,7 +76,9 @@ public class PanelCreateMusic : MonoBehaviour
             throw;
         }
 
-        GameData.SetSelectedSong(new SoundData(enteredText, image, audioSource.clip, bitList));
+        // Сделать проверку на редактуру не своего
+
+        GameData.SetSelectedSong(new SoundData(enteredText, image, audioSource.clip, bitList, new OwnerData("null", OwnerType.owner)));
         SceneManager.LoadScene("BitsRedactor");
     }
 

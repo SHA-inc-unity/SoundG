@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using static JsonDataSaver;
@@ -11,32 +12,41 @@ public class LoadSounds
 
         AudioClip[] audioClips = Resources.LoadAll<AudioClip>("Sound");
 
-        Dictionary<string, List<TimeValuePair>> bits = JsonDataSaver.Load();
+        Dictionary<string, List<TimeValuePair>> bits = JsonDataSaver.LoadBitList();
+
+        List<(OwnerData, string)> owners = null;
+
+        try
+        {
+            
+        }
+        catch (System.Exception)
+        {
+            owners = JsonDataSaver.LoadOwnerData();
+            throw;
+        }
 
         foreach (var clip in audioClips)
         {
             string soundName = clip.name;
             Sprite image = LoadImageForSound(soundName);
 
-            if (reanalize == 1)
+            // Проверка наличия анализа битов
+            if (reanalize == 1 && !bits.ContainsKey(soundName))
             {
-                if (!bits.ContainsKey(soundName))
-                {
-                    List<TimeValuePair> x = BitGenerator.AnalyzeMusic(clip);
-                    bits.Add(soundName, x);
-                }
+                bits[soundName] = BitGenerator.AnalyzeMusic(clip);
+            }
+            else if (reanalize == 2)
+            {
+                bits[soundName] = BitGenerator.AnalyzeMusic(clip);
             }
 
-            if (reanalize == 2)
-            {
-                List<TimeValuePair> x = BitGenerator.AnalyzeMusic(clip);
-                bits[soundName] = x;
-            }
+            OwnerData owner = owners.FirstOrDefault(o => o.Item2 == soundName).Item1 ?? new OwnerData(null, 0);
 
-            soundList.Add(new SoundData(soundName, image, clip, bits[soundName]));
+            soundList.Add(new SoundData(soundName, image, clip, bits[soundName], owner));
         }
 
-        JsonDataSaver.Save(bits);
+        JsonDataSaver.SaveBitList(bits);
 
         return soundList;
     }

@@ -34,12 +34,12 @@ public class SongDataControllerRedactor : SongDataController
 
     public void SaveBits()
     {
-        var json = JsonDataSaver.Load();
+        var json = JsonDataSaver.LoadBitList();
         if (json.ContainsKey(SelectedSong.Name))
             json[SelectedSong.Name] = SelectedSong.Bits;
         else
             json.Add(SelectedSong.Name, SelectedSong.Bits);
-        JsonDataSaver.Save(json);
+        JsonDataSaver.SaveBitList(json);
     }
 
     public void ChangeAddingOrRemoving()
