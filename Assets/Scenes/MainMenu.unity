@@ -1440,7 +1440,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2055009257}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.65909094
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3123,7 +3123,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00004106196}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &572043829
@@ -6130,9 +6130,9 @@ RectTransform:
   m_Father: {fileID: 1669189981}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -17, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1072096813
 MonoBehaviour:
@@ -8369,7 +8369,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1492664029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11102,14 +11102,14 @@ GameObject:
   - component: {fileID: 1966659314}
   - component: {fileID: 1966659317}
   - component: {fileID: 1966659316}
-  - component: {fileID: 1966659315}
+  - component: {fileID: 1966659318}
   m_Layer: 5
   m_Name: PanelPublishMusic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1966659314
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11132,21 +11132,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -800, y: -200}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1966659315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1966659313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5802649aade5bac4ebba9ab899c5ef0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  contentSoundList: {fileID: 572043828}
-  standartSoundObject: {fileID: 1542836332926714273, guid: 75b521e8af163944ba4d454beadd8d40, type: 3}
-  soundInfoPanel: {fileID: 763372777}
 --- !u!114 &1966659316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11185,6 +11170,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1966659313}
   m_CullTransparentMesh: 1
+--- !u!114 &1966659318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966659313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b72508ec6d207c4439578f60fb53751f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentSoundList: {fileID: 572043828}
+  standartSoundPublishObject: {fileID: 8519184954085806493, guid: 9d246883c2474b443bf53513c3dd4a30, type: 3}
+  soundInfoPanel: {fileID: 763372777}
 --- !u!1 &1996729045
 GameObject:
   m_ObjectHideFlags: 0
@@ -11448,7 +11448,7 @@ RectTransform:
   m_Father: {fileID: 1014765437}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
