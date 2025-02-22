@@ -27,6 +27,10 @@ public class SoundInfoPanel : MonoBehaviour
 
     public void StartSong()
     {
+        if (GameData.SelectedSong.Owner.ownedType != OwnerType.standart)
+        {
+            GameData.SetSelectedSong(MuzPackSaver.LoadMuzPack(GameData.SelectedSong.Name));
+        }
 
         SceneManager.LoadScene("Game");
     }
