@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.WebSockets;
 using System.Security.Cryptography;
 using System.Text;
@@ -7,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using static JsonDataSaver;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 public class NetServerController : MonoBehaviour
 {
@@ -123,6 +126,30 @@ public class NetServerController : MonoBehaviour
             await webSocket.SendAsync(
                 new ArraySegment<byte>(Encoding.UTF8.GetBytes(fullMessage)),
                 WebSocketMessageType.Text,
+                true,
+                CancellationToken.None
+            );
+        }
+        else
+        {
+            Debug.Log("WebSocket is not connected. Reconnecting...");
+            await Connect();
+        }
+    }
+
+    public async Task SendRequest(int id, string requestWord, byte[] data)
+    {
+        if (webSocket != null && webSocket.State == WebSocketState.Open)
+        {
+            byte[] header = Encoding.UTF8.GetBytes($"/sql {requestWord} {id} ");
+            byte[] fullMessage = new byte[header.Length + data.Length];
+
+            Buffer.BlockCopy(header, 0, fullMessage, 0, header.Length);
+            Buffer.BlockCopy(data, 0, fullMessage, header.Length, data.Length);
+
+            await webSocket.SendAsync(
+                new ArraySegment<byte>(fullMessage),
+                WebSocketMessageType.Binary,
                 true,
                 CancellationToken.None
             );
@@ -255,6 +282,128 @@ public class NetServerController : MonoBehaviour
 
         return await tcs.Task;
     }
+
+    public async Task<bool> PublishSong(string username, string password, MuzPackPreview muzPackPreview, string muzPackName)
+    {
+        var tcs = new TaskCompletionSource<bool>();
+        int requestId = GetRequestId();
+
+        // Хешируем пароль
+        string hashedPassword = ComputeSha256Hash(password);
+
+        int bufferSize = Options.BufferSize;
+        int maxParallelUploads = Options.MaxParallelUploads;
+        int timeoutSeconds = Math.Max(1, bufferSize / 1024);
+        string zipPath = MuzPackSaver.LoadMuzPackPath(muzPackName);
+
+        if (!File.Exists(zipPath))
+        {
+            return false; // Файл не найден
+        }
+
+        long fileSize = new FileInfo(zipPath).Length;
+        int totalParts = (int)Math.Ceiling((double)fileSize / bufferSize);
+
+        SetOnMessageReceivedListener(requestId, parts =>
+        {
+            tcs.SetResult(parts.Count > 0 && parts[0] == "true");
+        });
+
+        await SendRequest(requestId, "SaveSong", $"{username} {hashedPassword} {totalParts} {muzPackPreview.ToString()}");
+
+        if (!await tcs.Task)
+        {
+            return false;
+        }
+
+        SemaphoreSlim semaphore = new SemaphoreSlim(maxParallelUploads);
+        ConcurrentQueue<int> retryQueue = new ConcurrentQueue<int>();
+
+        async Task<bool> SendPart(int partNumber, int totalParts, byte[] data)
+        {
+            byte[] chunk = new byte[data.Length + 8];
+            Buffer.BlockCopy(BitConverter.GetBytes(partNumber), 0, chunk, 0, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes(totalParts), 0, chunk, 4, 4);
+            Buffer.BlockCopy(data, 0, chunk, 8, data.Length);
+
+            var partTcs = new TaskCompletionSource<bool>();
+            int partRequestId = GetRequestId();
+
+            SetOnMessageReceivedListener(partRequestId, responseParts =>
+            {
+                partTcs.TrySetResult(responseParts.Count > 0 && responseParts[0] == partNumber.ToString());
+            });
+
+            await SendRequest(partRequestId, "UploadSongPart", chunk);
+
+            var completedTask = await Task.WhenAny(partTcs.Task, Task.Delay(TimeSpan.FromSeconds(timeoutSeconds)));
+
+            if (completedTask == partTcs.Task && await partTcs.Task)
+            {
+                return true;
+            }
+            else
+            {
+                retryQueue.Enqueue(partNumber);
+                return false;
+            }
+        }
+
+        using (FileStream fileStream = new FileStream(zipPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+        {
+            List<Task> uploadTasks = new List<Task>();
+
+            for (int i = 0; i < totalParts; i++)
+            {
+                byte[] buffer = new byte[Math.Min(bufferSize, (int)(fileSize - fileStream.Position))];
+                await fileStream.ReadAsync(buffer, 0, buffer.Length);
+
+                await semaphore.WaitAsync();
+                int partNumber = i;
+
+                uploadTasks.Add(Task.Run(async () =>
+                {
+                    await SendPart(partNumber, totalParts, buffer);
+                    semaphore.Release();
+                }));
+            }
+
+            await Task.WhenAll(uploadTasks);
+        }
+
+        while (!retryQueue.IsEmpty)
+        {
+            List<Task> retryTasks = new List<Task>();
+            using (FileStream fileStream = new FileStream(zipPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                while (retryQueue.TryDequeue(out int retryPart))
+                {
+                    fileStream.Seek(retryPart * bufferSize, SeekOrigin.Begin);
+                    byte[] buffer = new byte[Math.Min(bufferSize, (int)(fileSize - fileStream.Position))];
+                    await fileStream.ReadAsync(buffer, 0, buffer.Length);
+
+                    await semaphore.WaitAsync();
+                    retryTasks.Add(Task.Run(async () =>
+                    {
+                        await SendPart(retryPart, totalParts, buffer);
+                        semaphore.Release();
+                    }));
+                }
+            }
+            await Task.WhenAll(retryTasks);
+        }
+
+        return retryQueue.IsEmpty;
+    }
+
+
+
+
+
+
+
+
+
 
 
     private string ComputeSha256Hash(string rawData)

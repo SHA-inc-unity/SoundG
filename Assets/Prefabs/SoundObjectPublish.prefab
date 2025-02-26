@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3258691707895834235}
   - component: {fileID: 1178753817823954958}
   - component: {fileID: 8737949687877097503}
-  - component: {fileID: 5008326280871300785}
   - component: {fileID: 8519184954085806493}
   m_Layer: 5
   m_Name: SoundObjectPublish
@@ -79,22 +78,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5008326280871300785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1250325664944011917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbc8cb47bcc95cc439e538794368462f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: {fileID: 3019539317197747019}
-  isNonBuyedText: {fileID: 5844031153069859569}
-  image: {fileID: 8356162911507061293}
-  button: {fileID: 1156571635107021376}
 --- !u!114 &8519184954085806493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,8 +563,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5008326280871300785}
-        m_TargetAssemblyTypeName: SoundObject, Assembly-CSharp
+      - m_Target: {fileID: 8519184954085806493}
+        m_TargetAssemblyTypeName: SoundObjectPublish, Assembly-CSharp
         m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:

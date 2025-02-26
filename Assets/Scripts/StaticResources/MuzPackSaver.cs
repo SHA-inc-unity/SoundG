@@ -60,6 +60,11 @@ public static class MuzPackSaver
         return stream.ToArray();
     }
 
+    public static string LoadMuzPackPath(string fileName)
+    {
+        return Path.Combine(Application.persistentDataPath, fileName + ".muzpack");
+    }
+
     public static SoundData LoadMuzPack(string fileName)
     {
         string loadPath = Path.Combine(Application.persistentDataPath, fileName + ".muzpack");
@@ -161,6 +166,31 @@ public static class MuzPackSaver
         return previews;
     }
 
+    public static MuzPackPreview GetMuzPackPreviewByName(string nameMP)
+    {
+        MuzPackPreview previews;
+
+        if (!Directory.Exists(localPath))
+            return null;
+
+        string[] files = Directory.GetFiles(localPath, "*.muzpack");
+
+        foreach (string filePath in files)
+        {
+            string name = Path.GetFileNameWithoutExtension(filePath);
+            Sprite image = ExtractImageFromMuzPack(filePath);
+            OwnerData ownerType = ExtractOwnerTypeFromMuzPack(filePath);
+
+            if (image != null && nameMP == name)
+            {
+                previews = new MuzPackPreview(name, image, ownerType);
+                return previews;
+            }
+        }
+
+        return null;
+    }
+
     private static OwnerData ExtractOwnerTypeFromMuzPack(string filePath)
     {
         using (FileStream fs = new FileStream(filePath, FileMode.Open))
@@ -251,5 +281,11 @@ public class MuzPackPreview
         Name = name;
         Image = image;
         OwnerType = ownerType;
+    }
+
+    public override string ToString()
+    {
+        string imageData = Image != null ? Convert.ToBase64String(Image.texture.EncodeToPNG()) : "null";
+        return $"{Name} {imageData} {OwnerType}";
     }
 }

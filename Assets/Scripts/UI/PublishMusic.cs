@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PublishMusic : MonoBehaviour
@@ -8,13 +9,13 @@ public class PublishMusic : MonoBehaviour
     [SerializeField]
     private SoundObjectPublish standartSoundPublishObject;
     [SerializeField]
-    private SoundInfoPanel soundInfoPanel;
+    private PublishInfoPanel soundInfoPanel;
 
     private LoadSounds loadSounds = new LoadSounds();
 
     public void SetSelectedSound(SoundData soundData)
     {
-
+        soundInfoPanel.RefreshSoundInfoPanel(soundData);
     }
 
     private async void OnEnable()

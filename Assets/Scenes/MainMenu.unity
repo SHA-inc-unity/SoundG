@@ -1440,7 +1440,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2055009257}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.65909094
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3878,7 +3878,7 @@ GameObject:
   - component: {fileID: 763372776}
   - component: {fileID: 763372779}
   - component: {fileID: 763372778}
-  - component: {fileID: 763372777}
+  - component: {fileID: 763372780}
   m_Layer: 5
   m_Name: SoundInfoPanel
   m_TagString: Untagged
@@ -3908,21 +3908,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 300, y: 880}
   m_Pivot: {x: 1, y: 0.5}
---- !u!114 &763372777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 763372775}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 354f7b332957d5d41ac790ee46380659, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundName: {fileID: 938522045}
-  soundImage: {fileID: 707628391}
-  startSoundButton: {fileID: 1499580744}
 --- !u!114 &763372778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3961,6 +3946,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 763372775}
   m_CullTransparentMesh: 1
+--- !u!114 &763372780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763372775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c987a1ce73023c418fc5affa2d52824, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: {fileID: 938522045}
+  soundImage: {fileID: 707628391}
+  startSoundButton: {fileID: 1499580744}
 --- !u!1 &767341990
 GameObject:
   m_ObjectHideFlags: 0
@@ -8693,9 +8693,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 763372777}
-        m_TargetAssemblyTypeName: SoundInfoPanel, Assembly-CSharp
-        m_MethodName: StartSong
+      - m_Target: {fileID: 763372780}
+        m_TargetAssemblyTypeName: PublishInfoPanel, Assembly-CSharp
+        m_MethodName: PublishSong
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11184,7 +11184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contentSoundList: {fileID: 572043828}
   standartSoundPublishObject: {fileID: 8519184954085806493, guid: 9d246883c2474b443bf53513c3dd4a30, type: 3}
-  soundInfoPanel: {fileID: 763372777}
+  soundInfoPanel: {fileID: 763372780}
 --- !u!1 &1996729045
 GameObject:
   m_ObjectHideFlags: 0
