@@ -17,11 +17,14 @@ public class PanelLoginRegistration : MonoBehaviour
 
     public async void Login(string name, string pass)
     {
-        string task = await NetServerController.Instance.Login(name, NetServerController.Instance.GetHashPass(pass));
+        string task = await NetServerController.Instance.Login(name, pass);
         Debug.Log(task);
 
-        LoginData.AddUserData(new UserData(name, pass));
-        panelController.ChangePanel(PanelsName.startGame);
+        if (task == "true")
+        {
+            LoginData.AddUserData(new UserData(name, pass));
+            panelController.ChangePanel(PanelsName.startGame);
+        }
     }
 
     public async void Registration()

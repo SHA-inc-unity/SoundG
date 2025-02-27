@@ -68,10 +68,14 @@ public class LoadSounds
                 sound => sound.Owner.ownedType);
 
 
+            // Найдем отсутствующие песни
+            List<SoundData> missingSongs = loadSounds
+                .Where(sound => !soundList.Any(s => s.Name == sound.Name))
+                .ToList();
+
             soundList = soundList
                 .Where(sound =>
                     loadSoundsDict.ContainsKey(sound.Name) || // Если песня есть в loadSounds, оставляем
-                    sound.Owner.ownedType == OwnerType.buyed ||
                     sound.Owner.ownedType == OwnerType.owner ||
                     sound.Owner.ownedType == OwnerType.standart)
                 .ToList();
@@ -79,10 +83,11 @@ public class LoadSounds
             owners = owners
                 .Where(ownerTuple =>
                     loadSoundsDict.ContainsKey(ownerTuple.Item2) || // Проверяем, есть ли трек в loadSounds
-                    ownerTuple.Item1.ownedType == OwnerType.buyed ||
                     ownerTuple.Item1.ownedType == OwnerType.owner ||
                     ownerTuple.Item1.ownedType == OwnerType.standart)
                 .ToList();
+
+            soundList.AddRange(missingSongs);
 
             foreach (var sound in soundList)
             {

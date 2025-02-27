@@ -286,6 +286,6 @@ public class MuzPackPreview
     public override string ToString()
     {
         string imageData = Image != null ? Convert.ToBase64String(Image.texture.EncodeToPNG()) : "null";
-        return $"{Name} {imageData} {OwnerType}";
+        return $"{Name.Replace(" ", "_")} {imageData.Replace(" ", "_")} {OwnerType}";
     }
 }

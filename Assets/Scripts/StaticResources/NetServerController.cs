@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.WebSockets;
 using System.Security.Cryptography;
 using System.Text;
@@ -137,30 +138,6 @@ public class NetServerController : MonoBehaviour
         }
     }
 
-    public async Task SendRequest(int id, string requestWord, byte[] data)
-    {
-        if (webSocket != null && webSocket.State == WebSocketState.Open)
-        {
-            byte[] header = Encoding.UTF8.GetBytes($"/sql {requestWord} {id} ");
-            byte[] fullMessage = new byte[header.Length + data.Length];
-
-            Buffer.BlockCopy(header, 0, fullMessage, 0, header.Length);
-            Buffer.BlockCopy(data, 0, fullMessage, header.Length, data.Length);
-
-            await webSocket.SendAsync(
-                new ArraySegment<byte>(fullMessage),
-                WebSocketMessageType.Binary,
-                true,
-                CancellationToken.None
-            );
-        }
-        else
-        {
-            Debug.Log("WebSocket is not connected. Reconnecting...");
-            await Connect();
-        }
-    }
-
     public async Task SendUnregisteredRequest(string message)
     {
         if (webSocket != null && webSocket.State == WebSocketState.Open)
@@ -269,7 +246,7 @@ public class NetServerController : MonoBehaviour
             if (parts.Count > 0)
             {
                 // Разбираем ответ сервера
-                List<SoundData> soundDataList = ParseSongs(parts[0]);
+                List<SoundData> soundDataList = ParseSongs(parts);
                 tcs.SetResult(soundDataList);
             }
             else
@@ -279,6 +256,35 @@ public class NetServerController : MonoBehaviour
         });
 
         await SendRequest(requestId, "GetTopSongs", $"{username} {hashedPassword}");
+
+        return await tcs.Task;
+    }
+
+    public async Task<SoundData> LoadSong(string username, string password, string muzPackName)
+    {
+        var tcs = new TaskCompletionSource<SoundData>();
+        int requestId = GetRequestId();
+
+        // Хешируем пароль
+        string hashedPassword = ComputeSha256Hash(password);
+
+        SetOnMessageReceivedListener(requestId, parts =>
+        {
+            if (parts.Count > 0)
+            {
+                // Разбираем ответ сервера
+                List<string> sd = new List<string>();
+                sd.Add(parts[0]);
+                SoundData soundDataList = ParseSongs(sd)[0];
+                tcs.SetResult(soundDataList);
+            }
+            else
+            {
+                tcs.SetResult(null); // Если ответа нет, возвращаем пустой список
+            }
+        });
+
+        await SendRequest(requestId, "LoadSong", $"{username} {hashedPassword} {muzPackName}");
 
         return await tcs.Task;
     }
@@ -306,7 +312,9 @@ public class NetServerController : MonoBehaviour
 
         SetOnMessageReceivedListener(requestId, parts =>
         {
-            tcs.SetResult(parts.Count > 0 && parts[0] == "true");
+            bool result = parts.Count > 0 && parts[0] == "true";
+            Debug.Log($"Initial response received: {result}");
+            tcs.SetResult(result);
         });
 
         await SendRequest(requestId, "SaveSong", $"{username} {hashedPassword} {totalParts} {muzPackPreview.ToString()}");
@@ -321,20 +329,21 @@ public class NetServerController : MonoBehaviour
 
         async Task<bool> SendPart(int partNumber, int totalParts, byte[] data)
         {
-            byte[] chunk = new byte[data.Length + 8];
-            Buffer.BlockCopy(BitConverter.GetBytes(partNumber), 0, chunk, 0, 4);
-            Buffer.BlockCopy(BitConverter.GetBytes(totalParts), 0, chunk, 4, 4);
-            Buffer.BlockCopy(data, 0, chunk, 8, data.Length);
+            string chunkBase64 = Convert.ToBase64String(data);
+            string message = $"{muzPackPreview.Name.Replace(" ", "_")} {username} {partNumber} {totalParts} {chunkBase64}";
 
             var partTcs = new TaskCompletionSource<bool>();
             int partRequestId = GetRequestId();
 
             SetOnMessageReceivedListener(partRequestId, responseParts =>
             {
-                partTcs.TrySetResult(responseParts.Count > 0 && responseParts[0] == partNumber.ToString());
+                bool partSuccess = responseParts.Count > 0 && responseParts[1] == partNumber.ToString() && responseParts[0] == "true";
+                Debug.Log($"Part {partNumber} received: {partSuccess}");
+                partTcs.TrySetResult(partSuccess);
             });
 
-            await SendRequest(partRequestId, "UploadSongPart", chunk);
+            Debug.Log($"Sending part {partNumber}/{totalParts}");
+            await SendRequest(partRequestId, "UploadSongPart", message);
 
             var completedTask = await Task.WhenAny(partTcs.Task, Task.Delay(TimeSpan.FromSeconds(timeoutSeconds)));
 
@@ -344,10 +353,12 @@ public class NetServerController : MonoBehaviour
             }
             else
             {
+                Debug.Log($"Retrying part {partNumber}");
                 retryQueue.Enqueue(partNumber);
                 return false;
             }
         }
+
 
         using (FileStream fileStream = new FileStream(zipPath, FileMode.Open, FileAccess.Read, FileShare.Read))
         {
@@ -363,6 +374,12 @@ public class NetServerController : MonoBehaviour
 
                 uploadTasks.Add(Task.Run(async () =>
                 {
+                    // Если это последний чанк, добавляем небольшую задержку перед отправкой
+                    if (partNumber == totalParts - 1)
+                    {
+                        await Task.Delay(10000); // 500 мс задержки
+                    }
+
                     await SendPart(partNumber, totalParts, buffer);
                     semaphore.Release();
                 }));
@@ -393,6 +410,7 @@ public class NetServerController : MonoBehaviour
             await Task.WhenAll(retryTasks);
         }
 
+        Debug.Log("All parts successfully uploaded");
         return retryQueue.IsEmpty;
     }
 
@@ -423,21 +441,19 @@ public class NetServerController : MonoBehaviour
     /// <summary>
     /// Разбирает ответ сервера и формирует список SoundData.
     /// </summary>
-    private List<SoundData> ParseSongs(string serverResponse)
+    private List<SoundData> ParseSongs(List<string> serverResponse)
     {
         List<SoundData> soundDataList = new List<SoundData>();
 
-        string[] parts = serverResponse.Split(' ');
-
-        if (parts.Length == 0 || parts[0] != "true")
+        if (serverResponse.Count == 0 || serverResponse[0] != "true")
         {
             Debug.LogError("Ошибка загрузки песен или сервер вернул пустой ответ.");
             return soundDataList;
         }
 
-        for (int i = 1; i < parts.Length; i++) // Пропускаем "true"
+        for (int i = 1; i < serverResponse.Count; i++) // Пропускаем "true"
         {
-            string[] songParts = parts[i].Split('_');
+            string[] songParts = serverResponse[i].Split("__");
             if (songParts.Length != 4) continue; // Пропускаем некорректные строки
 
             string songName = songParts[0];
