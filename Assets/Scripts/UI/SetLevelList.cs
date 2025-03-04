@@ -14,7 +14,7 @@ public class SetLevelList : MonoBehaviour
 
     public void ReloadAllSounds()
     {
-        loadSounds.LoadAllSounds(2);
+        loadSounds.LoadAllSounds(2, true);
     }
 
     public void SetSelectedSound(SoundData sound)
@@ -24,7 +24,7 @@ public class SetLevelList : MonoBehaviour
 
     private async void OnEnable()
     {
-        List<SoundData> soundList = await loadSounds.LoadAllSounds(1);
+        List<SoundData> soundList = await loadSounds.LoadAllSounds(1, true);
         for (int i = contentSoundList.childCount - 1; i >= 0; i--)
         {
             Destroy(contentSoundList.GetChild(i).gameObject);

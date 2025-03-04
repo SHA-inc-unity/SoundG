@@ -20,7 +20,7 @@ public class PublishMusic : MonoBehaviour
 
     private async void OnEnable()
     {
-        List<SoundData> soundList = await loadSounds.LoadAllSounds(1);
+        List<SoundData> soundList = await loadSounds.LoadAllSounds(1, false);
         for (int i = contentSoundList.childCount - 1; i >= 0; i--)
         {
             Destroy(contentSoundList.GetChild(i).gameObject);

@@ -6,13 +6,25 @@ using UnityEngine.UI;
 public class PublishInfoPanel : MonoBehaviour
 {
     [SerializeField]
-    private TMP_Text soundName;
+    private TMP_Text soundName, uploadText;
     [SerializeField]
     private Image soundImage;
     [SerializeField]
     private Button startSoundButton;
     [SerializeField]
     private MuzPackPreview muzPackPreview;
+
+    private void Update()
+    {
+        if (UploadDownloadStatus.mustLoadedData != 0 && UploadDownloadStatus.loadedData < UploadDownloadStatus.mustLoadedData)
+        {
+            uploadText.text = $"{UploadDownloadStatus.loadedData / 1024}kb / {UploadDownloadStatus.mustLoadedData / 1024}kb";
+        }
+        else
+        {
+            uploadText.text = "";
+        }
+    }
 
     public void RefreshSoundInfoPanel(SoundData soundData)
     {

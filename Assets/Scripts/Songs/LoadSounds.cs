@@ -7,7 +7,7 @@ using static JsonDataSaver;
 
 public class LoadSounds
 {
-    public async Task<List<SoundData>> LoadAllSounds(int reanalize)
+    public async Task<List<SoundData>> LoadAllSounds(int reanalize, bool isGetNetSong)
     {
         List<SoundData> soundList = new List<SoundData>();
 
@@ -60,13 +60,21 @@ public class LoadSounds
 
         if (LoginData.IsLogin)
         {
-            List<SoundData> loadSounds = await NetServerController.Instance.LoadSongs(
-                LoginData.UserData.name, LoginData.UserData.password);
+            List<SoundData> loadSounds;
+
+            if (isGetNetSong)
+            {
+                loadSounds = await NetServerController.Instance.LoadSongs(
+                    LoginData.UserData.name, LoginData.UserData.password);
+            }
+            else
+            {
+                loadSounds = new List<SoundData>();
+            }
 
             Dictionary<string, OwnerType> loadSoundsDict = loadSounds.ToDictionary(
                 sound => sound.Name,
                 sound => sound.Owner.ownedType);
-
 
             // Найдем отсутствующие песни
             List<SoundData> missingSongs = loadSounds

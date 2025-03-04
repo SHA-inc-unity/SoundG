@@ -308,6 +308,8 @@ public class NetServerController : MonoBehaviour
         }
 
         long fileSize = new FileInfo(zipPath).Length;
+        UploadDownloadStatus.mustLoadedData = fileSize;
+        UploadDownloadStatus.loadedData = 0;
         int totalParts = (int)Math.Ceiling((double)fileSize / bufferSize);
 
         SetOnMessageReceivedListener(requestId, parts =>
@@ -317,7 +319,7 @@ public class NetServerController : MonoBehaviour
             tcs.SetResult(result);
         });
 
-        await SendRequest(requestId, "SaveSong", $"{username} {hashedPassword} {totalParts} {muzPackPreview.ToString()}");
+        await SendRequest(requestId, "SaveSong", $"{username} {hashedPassword} {totalParts} {muzPackPreview}");
 
         if (!await tcs.Task)
         {
@@ -339,6 +341,10 @@ public class NetServerController : MonoBehaviour
             {
                 bool partSuccess = responseParts.Count > 0 && responseParts[1] == partNumber.ToString() && responseParts[0] == "true";
                 Debug.Log($"Part {partNumber} received: {partSuccess}");
+                if (partSuccess)
+                {
+                    UploadDownloadStatus.loadedData += bufferSize; // Увеличиваем uploadData
+                }
                 partTcs.TrySetResult(partSuccess);
             });
 
@@ -359,7 +365,6 @@ public class NetServerController : MonoBehaviour
             }
         }
 
-
         using (FileStream fileStream = new FileStream(zipPath, FileMode.Open, FileAccess.Read, FileShare.Read))
         {
             List<Task> uploadTasks = new List<Task>();
@@ -374,12 +379,6 @@ public class NetServerController : MonoBehaviour
 
                 uploadTasks.Add(Task.Run(async () =>
                 {
-                    // Если это последний чанк, добавляем небольшую задержку перед отправкой
-                    if (partNumber == totalParts - 1)
-                    {
-                        await Task.Delay(10000); // 500 мс задержки
-                    }
-
                     await SendPart(partNumber, totalParts, buffer);
                     semaphore.Release();
                 }));

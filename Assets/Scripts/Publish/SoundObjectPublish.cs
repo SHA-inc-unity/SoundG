@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class SoundObjectPublish : MonoBehaviour
 {
     [SerializeField]
-    private TMP_Text text, isNonBuyedText;
+    private TMP_Text text;
     [SerializeField]
     private Image image;
     [SerializeField]
@@ -14,6 +14,7 @@ public class SoundObjectPublish : MonoBehaviour
     private PublishMusic setLevelList;
     private SoundData soundData;
     private OwnerData owner;
+
 
     public void SetData(SoundData soundData, PublishMusic setLevelList)
     {
@@ -28,13 +29,11 @@ public class SoundObjectPublish : MonoBehaviour
         {
             // Пользователь купил объект или он входит в стандартную библиотеку
             button.interactable = true;
-            isNonBuyedText.gameObject.SetActive(false);
         }
         else
         {
             // Пользователь не купил объект и он не является стандартным
             button.interactable = false;
-            isNonBuyedText.gameObject.SetActive(true);
         }
     }
 
