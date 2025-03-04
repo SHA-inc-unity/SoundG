@@ -10,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using static JsonDataSaver;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 public class NetServerController : MonoBehaviour
 {
@@ -289,17 +288,12 @@ public class NetServerController : MonoBehaviour
         return await tcs.Task;
     }
 
+
+
     public async Task<bool> PublishSong(string username, string password, MuzPackPreview muzPackPreview, string muzPackName)
     {
-        var tcs = new TaskCompletionSource<bool>();
         int requestId = GetRequestId();
-
-        // Хешируем пароль
         string hashedPassword = ComputeSha256Hash(password);
-
-        int bufferSize = Options.BufferSize;
-        int maxParallelUploads = Options.MaxParallelUploads;
-        int timeoutSeconds = Math.Max(1, bufferSize / 1024);
         string zipPath = MuzPackSaver.LoadMuzPackPath(muzPackName);
 
         if (!File.Exists(zipPath))
@@ -310,8 +304,10 @@ public class NetServerController : MonoBehaviour
         long fileSize = new FileInfo(zipPath).Length;
         UploadDownloadStatus.mustLoadedData = fileSize;
         UploadDownloadStatus.loadedData = 0;
+        int bufferSize = Options.BufferSize;
         int totalParts = (int)Math.Ceiling((double)fileSize / bufferSize);
 
+        var tcs = new TaskCompletionSource<bool>();
         SetOnMessageReceivedListener(requestId, parts =>
         {
             bool result = parts.Count > 0 && parts[0] == "true";
@@ -320,101 +316,56 @@ public class NetServerController : MonoBehaviour
         });
 
         await SendRequest(requestId, "SaveSong", $"{username} {hashedPassword} {totalParts} {muzPackPreview}");
-
         if (!await tcs.Task)
         {
             return false;
         }
 
-        SemaphoreSlim semaphore = new SemaphoreSlim(maxParallelUploads);
-        ConcurrentQueue<int> retryQueue = new ConcurrentQueue<int>();
-
-        async Task<bool> SendPart(int partNumber, int totalParts, byte[] data)
-        {
-            string chunkBase64 = Convert.ToBase64String(data);
-            string message = $"{muzPackPreview.Name.Replace(" ", "_")} {username} {partNumber} {totalParts} {chunkBase64}";
-
-            var partTcs = new TaskCompletionSource<bool>();
-            int partRequestId = GetRequestId();
-
-            SetOnMessageReceivedListener(partRequestId, responseParts =>
-            {
-                bool partSuccess = responseParts.Count > 0 && responseParts[1] == partNumber.ToString() && responseParts[0] == "true";
-                Debug.Log($"Part {partNumber} received: {partSuccess}");
-                if (partSuccess)
-                {
-                    UploadDownloadStatus.loadedData += bufferSize; // Увеличиваем uploadData
-                }
-                partTcs.TrySetResult(partSuccess);
-            });
-
-            Debug.Log($"Sending part {partNumber}/{totalParts}");
-            await SendRequest(partRequestId, "UploadSongPart", message);
-
-            var completedTask = await Task.WhenAny(partTcs.Task, Task.Delay(TimeSpan.FromSeconds(timeoutSeconds)));
-
-            if (completedTask == partTcs.Task && await partTcs.Task)
-            {
-                return true;
-            }
-            else
-            {
-                Debug.Log($"Retrying part {partNumber}");
-                retryQueue.Enqueue(partNumber);
-                return false;
-            }
-        }
-
         using (FileStream fileStream = new FileStream(zipPath, FileMode.Open, FileAccess.Read, FileShare.Read))
         {
-            List<Task> uploadTasks = new List<Task>();
-
             for (int i = 0; i < totalParts; i++)
             {
                 byte[] buffer = new byte[Math.Min(bufferSize, (int)(fileSize - fileStream.Position))];
                 await fileStream.ReadAsync(buffer, 0, buffer.Length);
 
-                await semaphore.WaitAsync();
-                int partNumber = i;
-
-                uploadTasks.Add(Task.Run(async () =>
+                bool success = false;
+                do
                 {
-                    await SendPart(partNumber, totalParts, buffer);
-                    semaphore.Release();
-                }));
-            }
-
-            await Task.WhenAll(uploadTasks);
-        }
-
-        while (!retryQueue.IsEmpty)
-        {
-            List<Task> retryTasks = new List<Task>();
-            using (FileStream fileStream = new FileStream(zipPath, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                while (retryQueue.TryDequeue(out int retryPart))
-                {
-                    fileStream.Seek(retryPart * bufferSize, SeekOrigin.Begin);
-                    byte[] buffer = new byte[Math.Min(bufferSize, (int)(fileSize - fileStream.Position))];
-                    await fileStream.ReadAsync(buffer, 0, buffer.Length);
-
-                    await semaphore.WaitAsync();
-                    retryTasks.Add(Task.Run(async () =>
+                    success = await SendPart(i, totalParts, buffer, username, muzPackPreview.Name);
+                    if (!success)
                     {
-                        await SendPart(retryPart, totalParts, buffer);
-                        semaphore.Release();
-                    }));
-                }
+                        Debug.Log($"Retrying part {i}");
+                    }
+                } while (!success);
             }
-            await Task.WhenAll(retryTasks);
         }
 
         Debug.Log("All parts successfully uploaded");
-        return retryQueue.IsEmpty;
+        return true;
     }
 
+    private async Task<bool> SendPart(int partNumber, int totalParts, byte[] data, string username, string muzPackName)
+    {
+        string chunkBase64 = Convert.ToBase64String(data);
+        string message = $"{muzPackName.Replace(" ", "_")} {username} {partNumber} {totalParts} {chunkBase64}";
 
+        var partTcs = new TaskCompletionSource<bool>();
+        int partRequestId = GetRequestId();
 
+        SetOnMessageReceivedListener(partRequestId, responseParts =>
+        {
+            bool partSuccess = responseParts.Count > 0 && responseParts[1] == partNumber.ToString() && responseParts[0] == "true";
+            Debug.Log($"Part {partNumber} received: {partSuccess}");
+            if (partSuccess)
+            {
+                UploadDownloadStatus.loadedData += data.Length;
+            }
+            partTcs.SetResult(partSuccess);
+        });
+
+        await SendRequest(partRequestId, "UploadSongPart", message);
+        return await partTcs.Task;
+    }
 
 
 
