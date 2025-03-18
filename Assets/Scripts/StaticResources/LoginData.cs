@@ -36,10 +36,12 @@ public static class LoginData
 public class UserData
 {
     public string name, password;
+    public int coin;
 
-    public UserData(string name, string password)
+    public UserData(string name, string password, int coin)
     {
         this.name = name;
         this.password = password;
+        this.coin = coin;
     }
 }

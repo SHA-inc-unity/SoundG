@@ -69,6 +69,11 @@ public static class MuzPackSaver
     {
         string loadPath = Path.Combine(Application.persistentDataPath, fileName + ".muzpack");
 
+        if (!File.Exists(loadPath))
+        {
+            //Загрузить файл
+        }
+
         string name = "";
         int bpm = 0;
         List<TimeValuePair> bits = new List<TimeValuePair>();

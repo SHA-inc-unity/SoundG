@@ -207,9 +207,9 @@ public class NetServerController : MonoBehaviour
         return ComputeSha256Hash(password);
     }
 
-    public async Task<string> Login(string login, string password)
+    public async Task<(string, string, int)> Login(string login, string password)
     {
-        var tcs = new TaskCompletionSource<string>();
+        var tcs = new TaskCompletionSource<(string, string, int)>();
         int requestId = GetRequestId();
 
         // Хешируем пароль с помощью SHA-256
@@ -219,11 +219,11 @@ public class NetServerController : MonoBehaviour
         {
             if (parts.Count > 0)
             {
-                tcs.SetResult(parts[0]);
+                tcs.SetResult((parts[0], parts[1], int.Parse(parts[2])));
             }
             else
             {
-                tcs.SetResult(null);
+                tcs.SetResult((null, null, 0));
             }
         });
 
