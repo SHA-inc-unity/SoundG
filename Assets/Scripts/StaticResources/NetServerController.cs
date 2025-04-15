@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using static JsonDataSaver;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 public class NetServerController : MonoBehaviour
 {
@@ -367,6 +368,25 @@ public class NetServerController : MonoBehaviour
         return await partTcs.Task;
     }
 
+
+    public async Task<int> GetPrize(float i)
+    {
+        string message = $"{i}";
+
+        var partTcs = new TaskCompletionSource<int>();
+        int partRequestId = GetRequestId();
+
+        SetOnMessageReceivedListener(partRequestId, responseParts =>
+        {
+            if (responseParts.Count != 0)
+            {
+                partTcs.SetResult(int.Parse(responseParts[0]));
+            }
+        });
+
+        await SendRequest(partRequestId, "GetPrize", message);
+        return await partTcs.Task;
+    }
 
 
 

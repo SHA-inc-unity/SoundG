@@ -2,8 +2,13 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public enum Scores
@@ -45,6 +50,8 @@ public class SongDataController : MonoBehaviour
     private List<ScoreData> scores;
     [SerializeField]
     private TMP_Text scoreText;
+    [SerializeField]
+    private PrizeStatisticPanel prizeStatistic;
 
     private SoundData selectedSong;
     private int score = 0;
@@ -58,6 +65,11 @@ public class SongDataController : MonoBehaviour
                 return scores[i];
             }
         return null;
+    }
+
+    public void ReturnToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     protected void Start()
@@ -98,6 +110,27 @@ public class SongDataController : MonoBehaviour
 
             GetBitLine(bit.value)?.CreateBit(new DataBit(bit));
         }
+
+        yield return new WaitForSeconds(audioSource.clip.length - audioSource.time);
+
+        GiveVictory();
+    }
+
+    private async Task GiveVictory()
+    {
+        int maxScore = SelectedSong.Bits.Count * scores.Max(s => s.num);
+        int nowScore = Score;
+
+        float scoreP = nowScore / maxScore;
+        int res = await NetServerController.Instance.GetPrize(scoreP);
+
+        ShowPrizePanel(res, nowScore, maxScore);
+    }
+
+    private void ShowPrizePanel(int prize, int nowScore, int maxScore)
+    {
+        prizeStatistic.gameObject.SetActive(true);
+        prizeStatistic.SetData(SelectedSong.Name, maxScore, nowScore, prize)
     }
 
     private BitLine GetBitLine(int value)
