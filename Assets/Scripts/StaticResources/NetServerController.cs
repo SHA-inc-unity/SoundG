@@ -73,7 +73,7 @@ public class NetServerController : MonoBehaviour
 
     private async Task ReceiveMessages()
     {
-        var buffer = new byte[1024];
+        var buffer = new byte[1024 * 256];
 
         try
         {
@@ -288,6 +288,49 @@ public class NetServerController : MonoBehaviour
 
         return await tcs.Task;
     }
+    public async Task<int> GetMeatCoin(string username)
+    {
+        int requestId = GetRequestId();
+        var tcs = new TaskCompletionSource<int>();
+
+        SetOnMessageReceivedListener(requestId, parts =>
+        {
+            if (parts.Count > 0 && int.TryParse(parts[0], out int value))
+            {
+                LoginData.UserData.coin = value;
+                tcs.SetResult(value);
+            }
+            else
+            {
+                tcs.SetResult(0); // fallback
+            }
+        });
+
+        await SendRequest(requestId, "GetMeatCoin", username);
+        return await tcs.Task;
+    }
+    public async Task<bool> BuySong(SoundData soundData)
+    {
+        int requestId = GetRequestId();
+        string username = LoginData.UserData.name;
+        string songName = soundData.Name;
+
+        var tcs = new TaskCompletionSource<bool>();
+
+        SetOnMessageReceivedListener(requestId, parts =>
+        {
+            bool success = parts.Count > 0 && parts[0] == "true";
+            if (!success)
+                AttenshonManager.Instanse.ShowMessage("ТЫ СЛИШКОМ НИЩИЙ!");
+            else
+                AttenshonManager.Instanse.ShowMessage("Песня успешно куплена!");
+            tcs.SetResult(success);
+        });
+
+        await SendRequest(requestId, "BuySong", $"{username} {songName}");
+
+        return await tcs.Task;
+    }
 
 
 
@@ -371,7 +414,7 @@ public class NetServerController : MonoBehaviour
 
     public async Task<int> GetPrize(float i)
     {
-        string message = $"{i}";
+        string message = $"{LoginData.UserData.name} {GameData.SelectedSong.Name.Replace(" ", "_")} {i}";
 
         var partTcs = new TaskCompletionSource<int>();
         int partRequestId = GetRequestId();
@@ -388,9 +431,58 @@ public class NetServerController : MonoBehaviour
         return await partTcs.Task;
     }
 
+    public async Task<int> RequestTotalParts(string username, string hashedPassword, string songName)
+    {
+        int requestId = GetRequestId();
+        var tcs = new TaskCompletionSource<int>();
 
+        SetOnMessageReceivedListener(requestId, parts =>
+        {
+            if (parts.Count >= 2 && parts[0] == "true")
+            {
+                tcs.SetResult(int.Parse(parts[1]));
+            }
+            else
+            {
+                tcs.SetResult(-1);
+            }
+        });
 
+        await SendRequest(requestId, "DownloadSong", $"{username} {hashedPassword} {songName}");
+        return await tcs.Task;
+    }
 
+    public async Task<bool> RequestDownloadPartToPath(string username, string songName, int partNumber, int totalParts, string tempDir)
+    {
+        int requestId = GetRequestId();
+        var tcs = new TaskCompletionSource<bool>();
+
+        SetOnMessageReceivedListener(requestId, parts =>
+        {
+            if (parts.Count >= 3 && parts[0] == "true" && parts[1] == partNumber.ToString())
+            {
+                try
+                {
+                    byte[] chunk = Convert.FromBase64String(parts[2]);
+                    string partPath = Path.Combine(tempDir, $"part_{partNumber}.bin");
+                    File.WriteAllBytes(partPath, chunk);
+                    tcs.SetResult(true);
+                }
+                catch
+                {
+                    tcs.SetResult(false);
+                }
+            }
+            else
+            {
+                tcs.SetResult(false);
+            }
+        });
+
+        string message = $"{songName} {username} {partNumber} {totalParts}";
+        await SendRequest(requestId, "DownloadSongPart", message);
+        return await tcs.Task;
+    }
 
 
 

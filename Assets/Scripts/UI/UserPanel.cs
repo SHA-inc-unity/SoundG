@@ -30,8 +30,14 @@ public class UserPanel : MonoBehaviour
         button.interactable = !isLoggedIn;
     }
 
-    private void Start()
+    private async void Start()
     {
+        if (LoginData.IsLogin)
+        {
+            int updatedCoin = await NetServerController.Instance.GetMeatCoin(LoginData.UserData.name);
+            coins.text = $"Coin: {updatedCoin}";
+        }
+
         HandleLoginStatusChange(LoginData.IsLogin);
     }
 }

@@ -1818,7 +1818,7 @@ MonoBehaviour:
     num: 10
     color: {r: 1, g: 0, b: 0, a: 1}
   scoreText: {fileID: 36281715}
-  prizeStatistic: {fileID: 0}
+  prizeStatistic: {fileID: 2076654325}
 --- !u!1 &1824670471
 GameObject:
   m_ObjectHideFlags: 0
@@ -1966,6 +1966,7 @@ GameObject:
   - component: {fileID: 2076654322}
   - component: {fileID: 2076654324}
   - component: {fileID: 2076654323}
+  - component: {fileID: 2076654325}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -2036,6 +2037,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2076654321}
   m_CullTransparentMesh: 1
+--- !u!114 &2076654325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076654321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b43e5b5ec55a53243b3235a4a9936f77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  songName: {fileID: 686909597}
+  scores: {fileID: 434528647}
+  prizeSize: {fileID: 684544104}
+  leaderTable: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -1,3 +1,5 @@
+using System.IO;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,19 +29,28 @@ public class SoundObject : MonoBehaviour
         if ((owner.ownedType & (OwnerType.buyed | OwnerType.standart | OwnerType.owner)) != 0)
         {
             // Пользователь купил объект или он входит в стандартную библиотеку
-            button.interactable = true;
             isNonBuyedText.gameObject.SetActive(false);
         }
         else
         {
             // Пользователь не купил объект и он не является стандартным
-            button.interactable = false;
             isNonBuyedText.gameObject.SetActive(true);
         }
     }
 
     public void OnClick()
     {
-        setLevelList.SetSelectedSound(soundData);
+        OnClickAsync();
+    }
+
+    private async Task OnClickAsync()
+    {
+        if (isNonBuyedText.gameObject.activeSelf)
+        {
+            if(await NetServerController.Instance.BuySong(soundData))
+                setLevelList.OnEnable();
+        }
+        else
+            setLevelList.SetSelectedSound(soundData);
     }
 }

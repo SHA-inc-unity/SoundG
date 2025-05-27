@@ -4,6 +4,7 @@ using System.IO.Compression;
 using UnityEngine;
 using System.Collections.Generic;
 using static JsonDataSaver;
+using System.Threading.Tasks;
 
 public static class MuzPackSaver
 {
@@ -65,13 +66,56 @@ public static class MuzPackSaver
         return Path.Combine(Application.persistentDataPath, fileName + ".muzpack");
     }
 
-    public static SoundData LoadMuzPack(string fileName)
+    public static async Task<SoundData> LoadMuzPack(string fileName)
     {
-        string loadPath = Path.Combine(Application.persistentDataPath, fileName + ".muzpack");
+        string loadPath = LoadMuzPackPath(fileName);
 
         if (!File.Exists(loadPath))
         {
-            //Загрузить файл
+            Debug.Log($"Файл {fileName} отсутствует. Начинаем загрузку с сервера...");
+
+            string username = LoginData.UserData.name;
+            string password = LoginData.UserData.password;
+            string hashedPassword = NetServerController.Instance.GetHashPass(password);
+
+            int totalParts = await NetServerController.Instance
+                .RequestTotalParts(username, hashedPassword, fileName);
+
+            if (totalParts <= 0)
+            {
+                Debug.LogError("Не удалось получить количество частей от сервера");
+                return null;
+            }
+
+            string tempDir = loadPath + "_parts";
+            Directory.CreateDirectory(tempDir);
+
+            for (int i = 0; i < totalParts; i++)
+            {
+                bool success;
+                do
+                {
+                    success = await NetServerController.Instance
+                        .RequestDownloadPartToPath(username, fileName, i, totalParts, tempDir);
+
+                    if (!success)
+                        Debug.LogWarning($"Повторная попытка части {i}");
+                } while (!success);
+            }
+
+            using (var fs = new FileStream(loadPath, FileMode.Create, FileAccess.Write))
+            {
+                for (int i = 0; i < totalParts; i++)
+                {
+                    string partPath = Path.Combine(tempDir, $"part_{i}.bin");
+                    byte[] bytes = File.ReadAllBytes(partPath);
+                    fs.Write(bytes, 0, bytes.Length);
+                    File.Delete(partPath);
+                }
+            }
+
+            Directory.Delete(tempDir);
+            Debug.Log($"Файл {fileName} успешно загружен и собран: {loadPath}");
         }
 
         string name = "";

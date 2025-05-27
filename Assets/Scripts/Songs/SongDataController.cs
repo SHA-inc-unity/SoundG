@@ -111,7 +111,9 @@ public class SongDataController : MonoBehaviour
             GetBitLine(bit.value)?.CreateBit(new DataBit(bit));
         }
 
-        yield return new WaitForSeconds(audioSource.clip.length - audioSource.time);
+        yield return new WaitForSeconds(5);
+
+        audioSource.Pause();
 
         GiveVictory();
     }
@@ -130,7 +132,7 @@ public class SongDataController : MonoBehaviour
     private void ShowPrizePanel(int prize, int nowScore, int maxScore)
     {
         prizeStatistic.gameObject.SetActive(true);
-        prizeStatistic.SetData(SelectedSong.Name, maxScore, nowScore, prize)
+        prizeStatistic.SetData(SelectedSong.Name, maxScore, nowScore, prize);
     }
 
     private BitLine GetBitLine(int value)

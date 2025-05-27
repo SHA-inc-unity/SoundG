@@ -22,7 +22,7 @@ public class SetLevelList : MonoBehaviour
         soundInfoPanel.RefreshSoundInfoPanel(sound);
     }
 
-    private async void OnEnable()
+    public async void OnEnable()
     {
         List<SoundData> soundList = await loadSounds.LoadAllSounds(1, true);
         for (int i = contentSoundList.childCount - 1; i >= 0; i--)

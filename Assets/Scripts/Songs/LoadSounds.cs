@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
@@ -49,7 +50,7 @@ public class LoadSounds
         {
             if (item.OwnerType.ownedType == (OwnerType.owner | OwnerType.standart | OwnerType.buyed))
             {
-                soundList.Add(MuzPackSaver.LoadMuzPack(item.Name));
+                soundList.Add(await MuzPackSaver.LoadMuzPack(item.Name));
             }
             else
             {
